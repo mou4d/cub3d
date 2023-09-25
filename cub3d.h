@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/09/25 17:56:20 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:48:16 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_map
 	char	*C;
 	char	*map_r;
 	char	**map_s;
+	int		init_player_x;
+	int		init_player_y;
 }	t_map;
 
 //parsing.c
@@ -43,5 +45,5 @@ int		process_map(t_map *map);
 int		check_top_border(t_map *map);
 int		check_bottom_border(t_map *map);
 int		check_side_borders (t_map *map);
-int		check_map_elements(char **str, char *valid_elements);
+int		check_map_elements(t_map *map, char **str, char *valid_elements);
 #endif

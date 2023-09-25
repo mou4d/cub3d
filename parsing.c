@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 20:57:09 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/09/25 18:02:45 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:48:19 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ t_map	*read_map(char *file)
 	ret = malloc(sizeof(t_map));
 	ret->map_fd = fd;
 	ret->map_s = ft_split(buff, '\n');
+	ret->init_player_x = -1;
+	ret->init_player_y = -1;
 	return (ret);
 }
 
@@ -118,7 +120,7 @@ int	process_map(t_map *map)
 	int	ret;
 
 	ret = 0;
-	if (check_map_elements(map->map_s, "NSEW01 	") != 1)
+	if (check_map_elements(map, map->map_s, "NSEW01 	") != 1)
 		return (printf("Map elements not valid\n"));
 	ret = check_top_border(map);
 	ret = check_bottom_border(map);
