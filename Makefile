@@ -1,6 +1,6 @@
 CC = cc
 FLAGS = -Werror -Wextra -Wall
-SRCS = cub3d.c parsing.c
+SRCS = parsing.c map.c cub3d.c
 OBJS = $(SRCS:.c=.o)
 INCLUDES = -I./lib/MLX42/include/MLX42
 LIBFT = ./lib/libft/libft.a
@@ -12,10 +12,6 @@ all : $(NAME)
 $(NAME) : $(LIBFT) $(MLX42) $(OBJS)
 	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(MLX42) $(INCLUDES) -lglfw -pthread -o $(NAME)
 
-clean :
-	rm -f $(OBJS)
-	make -C ./lib/libft clean
-
 $(LIBFT) :
 	make -C ./lib/libft
 
@@ -23,6 +19,15 @@ $(MLX42) :
 	cmake -S ./lib/MLX42 -B ./lib/MLX42/build
 	cmake --build ./lib/MLX42/build -j4
 
+%.o : %.c
+	$(CC) $(FLAGS) $< -g -c
+
+clean :
+	rm -f $(OBJS)
+	make -C ./lib/libft clean
+
 fclean : clean
 	rm -f $(NAME)
 	make -C ./lib/libft fclean
+
+re : fclean all
