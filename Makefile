@@ -7,10 +7,12 @@ LIBFT = ./lib/libft/libft.a
 MLX42 = ./lib/MLX42/build/libmlx42.a
 NAME = cub3d
 
+GLFW = $(shell brew --prefix glfw)/lib
+
 all : $(NAME)
 
 $(NAME) : $(LIBFT) $(MLX42) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(MLX42) $(INCLUDES) -lglfw -pthread -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(MLX42) $(INCLUDES) -L $(GLFW)  -lglfw -pthread -o $(NAME)
 
 $(LIBFT) :
 	make -C ./lib/libft

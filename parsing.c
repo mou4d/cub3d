@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 20:57:09 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/09/25 18:57:37 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/11/12 12:44:56 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ t_map	*read_map(char *file)
 	r_count = read(fd, buff, BUFSIZ);
 	if (r_count <= 0)
 		return (NULL);
+	buff[r_count] = '\0';
 	ret = malloc(sizeof(t_map));
 	ret->map_fd = fd;
 	ret->map_s = ft_split(buff, '\n');
