@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/09/25 17:07:01 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/09/26 20:17:56 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int main(int ac, char **av)
 {
 	t_map	*map;
+	mlx_t	*mlx;
 	// int		i;
 
 	if (ac < 2)
@@ -36,8 +37,10 @@ int main(int ac, char **av)
 	if (process_map(map) != 1)
 		return (1);
 	
-	//validate_path()
-	
+	mlx = init_mlx(map);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
+	// Create and display the image.
 	// printf("#################\n");
 	// printf("NO=%s\n", map->NO);
 	// printf("SO=%s\n", map->SO);

@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/09/25 18:48:16 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/09/26 22:22:40 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 #include "./lib/libft/libft.h"
 # include "./lib/MLX42/include/MLX42/MLX42.h"
+# define SCALLE 10
 
 typedef struct s_map
 {
@@ -46,4 +47,7 @@ int		check_top_border(t_map *map);
 int		check_bottom_border(t_map *map);
 int		check_side_borders (t_map *map);
 int		check_map_elements(t_map *map, char **str, char *valid_elements);
+
+// utils.c
+mlx_t	*init_mlx(t_map *map);
 #endif

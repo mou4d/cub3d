@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 20:57:09 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/09/25 18:48:19 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:57:37 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	process_map(t_map *map)
 	ret = check_bottom_border(map);
 	ret = check_side_borders(map);
 	if (!ret)
-		return (printf("Map not closed properrly\n"));
+		return (printf("Map not closed properly\n"));
 	return (ret);
 }
 
