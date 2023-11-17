@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/16 19:52:45 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/11/17 19:49:18 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,33 @@ char **fix_map(char **map)
 		free(map[tmp++]);
 	free(map);
 	return (p);
+	
+}
+
+int	strlen_map_width_and_height(char **p, char c)
+{
+	int	i;
+	int	big_value;
+
+	i = 0;
+	big_value = 0;
+	while (p && p[i])
+	{
+		if(ft_strlen(p[i]) >= big_value)
+			big_value = ft_strlen(p[i]);
+		i++;	
+	}
+	if(c == 'h')
+		return i;
+	return (big_value);
 }
 
 void start_cub3d(t_map *map)
 {
 	mlx_t	*mlx;
-
+	
+	map->width_map = strlen_map_width_and_height(map->map_s, 'w');
+	map->height_map = strlen_map_width_and_height(map->map_s, 'h');
 	mlx = init_mlx(map);
 	mlx_loop(mlx);
 }
