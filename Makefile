@@ -1,5 +1,5 @@
 CC = cc
-FLAGS = #-Werror -Wextra -Wall
+FLAGS = -fsanitize=address -g #-Werror -Wextra -Wall 
 SRCS = parsing.c map.c cub3d.c utils.c
 OBJS = $(SRCS:.c=.o)
 INCLUDES = -I./lib/MLX42/include/MLX42
