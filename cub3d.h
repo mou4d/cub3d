@@ -16,8 +16,21 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
-#include "./lib/libft/libft.h"
+# include <math.h>
+# include "./lib/libft/libft.h"
 # include "./lib/MLX42/include/MLX42/MLX42.h"
+
+typedef struct s_player
+{
+	int x;
+	int y;
+	int radius;
+	int direction;// turndirection if = 0 >> stable if -1 >> left if +1 to right
+	int move;// walk if = 0 >> not walking if +1 >> to up if >> -1 to back
+	double speedmv;//move speed
+	double retactionspS;//retaction speed
+} t_plr;
+
 
 typedef struct s_map
 {
