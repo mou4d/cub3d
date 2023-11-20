@@ -58,21 +58,76 @@ int	strlen_map_width_and_height(char **p, char c)
 	return (big_value);
 }
 
+void	info_player(t_plr *p, t_map *m)
+{
+	int x;
+	int y;
+	
+	y = -1;
+	while(m->map_s[++y])
+	{
+		x = -1;
+		while(m->map_s[y][++x])
+		{
+			if(m->map_s[y][x] == 'N')
+			{
+				p->x = (x * 32.0);
+				p->y = y * 32.0;
+			}
+		}
+	}
+	p->direction = 0;
+	p->move = 0;
+	p->radius = 8.0;
+	p->speedmv = 2.0; //pix
+	p->retactionangle = M_PI / 2;
+	p->retactionsSpeed = 2.0 * (M_PI / 180);
+}
+
+void update_key(void *tmp)
+{
+	double movestp;
+	t_map *map = (t_map *)tmp;
+	if (mlx_is_key_down(map->mlx, MLX_KEY_W) == true)
+		map->plr->move = 1; 
+	else if (mlx_is_key_down(map->mlx, MLX_KEY_S) == true)
+		map->plr->move = -1;
+	else if (mlx_is_key_down(map->mlx, MLX_KEY_A) == true)
+		map->plr->direction = 1;
+	else if (mlx_is_key_down(map->mlx, MLX_KEY_D) == true)
+		map->plr->direction = -1;
+	map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
+	movestp = map->plr->move * map->plr->speedmv;
+	map->plr->x += cos(map->plr->retactionangle) * movestp;
+	map->plr->y += sin(map->plr->retactionangle) * movestp;
+	init_mlx(map);
+	map->plr->move = 0; 
+	map->plr->direction = 0;
+}
+
 void start_cub3d(t_map *map)
 {
-	mlx_t	*mlx;
-	
+	map->plr = malloc(sizeof(t_plr) + 1);
+	if(!map->plr)
+		exit(99);
+	info_player(map->plr, map);
 	map->width_map = strlen_map_width_and_height(map->map_s, 'w');
 	map->height_map = strlen_map_width_and_height(map->map_s, 'h');
-	mlx = init_mlx(map);
-	mlx_loop(mlx);
+	printf("w = %d, h = %d\n", map->width_map, map->height_map);
+	map->mlx = mlx_init(map->width_map * 40, map->height_map * 40,"cub3d", true);
+	map->img = mlx_new_image(map->mlx, map->width_map * 40, map->height_map * 40);
+	if(!map->img || mlx_image_to_window(map->mlx, map->img, 0, 0) < 0)
+		error_mlx();
+	init_mlx(map);
+	mlx_loop_hook(map->mlx, update_key, map);
+	mlx_loop(map->mlx);
 }
 
 int main(int ac, char **av)
 {
 	t_map	*map;
 	int		i;
-
+	
 	if (ac < 2)
 		return (printf("Error\n"));
 	// if (ft_strncmp(av[1], ".cub", 4) != 0)

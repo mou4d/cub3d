@@ -24,10 +24,10 @@ void	put_px(t_map *map, mlx_image_t *img, int x, int y, uint32_t color)
 	int tx, ty;
 	tx = x;
 	ty = y;
-	while(ty < y + 31)
+	while(ty < y + 32)
 	{
 		tx = x;
-		while(tx < x + 31)
+		while(tx < x + 32)
 		{
 			mlx_put_pixel(img, tx, ty, color);
 			tx++;
@@ -41,7 +41,6 @@ void	draw_map(t_map *map, mlx_image_t *img)
 	int x;
 	int y;
 	int size;
-	uint32_t color;
 
 	x = 0;
 	y = 0;
@@ -51,17 +50,34 @@ void	draw_map(t_map *map, mlx_image_t *img)
 		size = 0;
 		while(map->map_s[y][++x])
 		{
-			color = 0xFF0000FF;
 			if(map->map_s[y][x] == '\t')
 				size = size +  (32 * 3);
-			if(map->map_s[y][x] == 'N')
-				printf("xyyyy = %d and yyyyy = %d\n", x * 32, y * 32);
 			if(map->map_s[y][x] == '1')
-				put_px(map, img, (x * 32) + size, y * 32, color);
+				put_px(map, img, (x * 32) + size, y * 32, 0xFF0000FF);
+			else
+				put_px(map, img, (x * 32) + size, y * 32, 0x0);
 		}
 		y++;
 	}
 }
+
+void	draw_line_direction(t_map *map)
+{
+	int x;
+	int y;
+	y = 0;
+	while(y < 360)
+	{
+		x = 0;
+		while(x < 40)
+		{
+			mlx_put_pixel(map->img, map->plr->x + map->plr->radius + x * cos(map->plr->retactionangle), map->plr->y + map->plr->radius + x * sin(map->plr->retactionangle), 0x007258);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	draw_player(t_plr *ply, mlx_image_t *img)
 {
 	int i;
@@ -73,53 +89,17 @@ void	draw_player(t_plr *ply, mlx_image_t *img)
 		j = 0;
 		while(j < ply->radius)
 		{
-			mlx_put_pixel(img, ply->x + j * cos(i * M_PI / 180), ply->y + j * sin(i * M_PI / 180), 0xFF0000FF);
+			 mlx_put_pixel(img, ply->x + ply->radius + j * cos(i), ply->y + ply->radius + j * sin(i), 0x007258);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	info_player(t_plr *p, t_map *m)
-{
-	int x;
-	int y;
-	
-	y = -1;
-	while(m->map_s[++y])
-	{
-		x = -1;
-		while(m->map_s[y][++x])
-		{
-			if(m->map_s[y][x] == 'N')
-			{
-				p->x = (x * 32.0);
-				p->y = y * 32.0;
-			}
-		}
-	}
-	p->direction = 0;
-	p->move = 0;
-	p->radius = 20.0;
-	p->speedmv = 2.0; //pix
-	p->retactionspS = 2.0 * (M_PI / 180);
-}
-mlx_t	*init_mlx(t_map *map)
-{
-	mlx_t	*mlx;
-	mlx_image_t *img;
-	t_plr		*plr;
 
-	plr = malloc(sizeof(t_plr) + 1);
-	if(!plr)
-		exit(99);
-	info_player(plr, map);
-	printf("w = %d, h = %d\n", map->width_map, map->height_map);
-	mlx = mlx_init(map->width_map * 40, map->height_map * 40,"cub3d", true);
-	img = mlx_new_image(mlx, map->width_map * 40, map->height_map * 40);
-	if(!img || mlx_image_to_window(mlx, img, 0, 0) < 0)
-		error_mlx();
-	draw_map(map, img);
-	draw_player(plr, img);
-	return (mlx);
+void	init_mlx(t_map *map)
+{
+	draw_map(map, map->img);
+	draw_player(map->plr, map->img);
+	draw_line_direction(map);
 }

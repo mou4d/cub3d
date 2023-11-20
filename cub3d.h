@@ -27,13 +27,17 @@ typedef struct s_player
 	int radius;
 	int direction;// turndirection if = 0 >> stable if -1 >> left if +1 to right
 	int move;// walk if = 0 >> not walking if +1 >> to up if >> -1 to back
+	double retactionangle;
 	double speedmv;//move speed
-	double retactionspS;//retaction speed
+	double retactionsSpeed;//retaction speed
 } t_plr;
 
 
 typedef struct s_map
 {
+	t_plr	*plr;
+	mlx_t	*mlx;
+	mlx_image_t *img;
 	int		width_map;
 	int		height_map;
 	char	*map_path;
@@ -62,5 +66,7 @@ int		check_side_borders (t_map *map);
 int		check_map_elements(t_map *map, char **str, char *valid_elements);
 
 // // utils.c
-mlx_t	*init_mlx(t_map *map);
+void	error_mlx(void);
+void	init_mlx(t_map *map);
+void	draw_player(t_plr *ply, mlx_image_t *img);
 #endif
