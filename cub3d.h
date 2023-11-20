@@ -22,9 +22,9 @@
 
 typedef struct s_player
 {
-	int x;
-	int y;
-	int radius;
+	double x;
+	double y;
+	double radius;
 	int direction;// turndirection if = 0 >> stable if -1 >> left if +1 to right
 	int move;// walk if = 0 >> not walking if +1 >> to up if >> -1 to back
 	double retactionangle;

@@ -88,8 +88,7 @@ bool	movestp_not_into_wall(t_map *map, double movestp)
 	char test;
 	int x = (map->plr->x + map->plr->radius + cos(map->plr->retactionangle) * movestp) / map->Xwindows_width ;
 	int y = (map->plr->y + map->plr->radius + sin(map->plr->retactionangle) * movestp) / map->Ywindows_height ;
-	if(x < 0 || x > map->width_map || y < 0 || y > map->Ywindows_height)
-		return false;
+
 	test = map->map_s[y][x];
 	printf("test = %c\n", test);
 	if(test == '1')
@@ -137,7 +136,7 @@ void start_cub3d(t_map *map)
 	map->img = mlx_new_image(map->mlx, map->width_map * 40, map->height_map * 40);
 	if(!map->img || mlx_image_to_window(map->mlx, map->img, 0, 0) < 0)
 		error_mlx();
-	//init_mlx(map);
+	init_mlx(map);
 	mlx_loop_hook(map->mlx, update_key, map);
 	mlx_loop(map->mlx);
 }
