@@ -71,8 +71,8 @@ void	info_player(t_plr *p, t_map *m)
 		{
 			if(m->map_s[y][x] == 'N')
 			{
-				p->x = (x * 32.0);
-				p->y = y * 32.0;
+				p->x = (x * m->Xwindows_width);
+				p->y = y * m->Ywindows_height;
 			}
 		}
 	}
@@ -82,6 +82,18 @@ void	info_player(t_plr *p, t_map *m)
 	p->speedmv = 2.0; //pix
 	p->retactionangle = M_PI / 2;
 	p->retactionsSpeed = 2.0 * (M_PI / 180);
+}
+bool	movestp_not_into_wall(t_map *map, double movestp)
+{
+	char test;
+	int x = (map->plr->x + cos(map->plr->retactionangle) * movestp) / map->Xwindows_width;
+	int y = (map->plr->y + sin(map->plr->retactionangle) * movestp) / map->Ywindows_height;
+
+	test = map->map_s[y][x];
+	printf("test = %c\n", test);
+	if(test == '1')
+		return false;
+	return true;
 }
 
 void update_key(void *tmp)
@@ -98,15 +110,21 @@ void update_key(void *tmp)
 		map->plr->direction = -1;
 	map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
 	movestp = map->plr->move * map->plr->speedmv;
-	map->plr->x += cos(map->plr->retactionangle) * movestp;
-	map->plr->y += sin(map->plr->retactionangle) * movestp;
+	if(movestp_not_into_wall(map, movestp) == true)
+	{
+		map->plr->x += cos(map->plr->retactionangle) * movestp;
+		map->plr->y += sin(map->plr->retactionangle) * movestp;
+	}
 	init_mlx(map);
+	movestp = 0;
 	map->plr->move = 0; 
 	map->plr->direction = 0;
 }
 
 void start_cub3d(t_map *map)
 {
+	map->Ywindows_height = 40;
+	map->Xwindows_width = 40;
 	map->plr = malloc(sizeof(t_plr) + 1);
 	if(!map->plr)
 		exit(99);

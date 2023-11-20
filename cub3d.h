@@ -38,6 +38,8 @@ typedef struct s_map
 	t_plr	*plr;
 	mlx_t	*mlx;
 	mlx_image_t *img;
+	int		Xwindows_width;
+	int		Ywindows_height;
 	int		width_map;
 	int		height_map;
 	char	*map_path;

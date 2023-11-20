@@ -24,10 +24,10 @@ void	put_px(t_map *map, mlx_image_t *img, int x, int y, uint32_t color)
 	int tx, ty;
 	tx = x;
 	ty = y;
-	while(ty < y + 32)
+	while(ty < y + map->Ywindows_height)
 	{
 		tx = x;
-		while(tx < x + 32)
+		while(tx < x + map->Xwindows_width)
 		{
 			mlx_put_pixel(img, tx, ty, color);
 			tx++;
@@ -51,11 +51,11 @@ void	draw_map(t_map *map, mlx_image_t *img)
 		while(map->map_s[y][++x])
 		{
 			if(map->map_s[y][x] == '\t')
-				size = size +  (32 * 3);
+				size = size +  (map->Xwindows_width * 3);
 			if(map->map_s[y][x] == '1')
-				put_px(map, img, (x * 32) + size, y * 32, 0xFF0000FF);
+				put_px(map, img, (x * map->Xwindows_width) + size, y * map->Ywindows_height, 0xFF0000FF);
 			else
-				put_px(map, img, (x * 32) + size, y * 32, 0x0);
+				put_px(map, img, (x * map->Xwindows_width) + size, y * map->Ywindows_height, 0x0);
 		}
 		y++;
 	}
