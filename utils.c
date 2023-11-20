@@ -40,20 +40,18 @@ void	draw_map(t_map *map, mlx_image_t *img)
 {
 	int x;
 	int y;
-	int size;
 
 	x = 0;
 	y = 0;
 	while (map->map_s[y])
 	{
 		x = -1;
-		size = 0;
 		while(map->map_s[y][++x])
 		{
 			if(map->map_s[y][x] == '1')
-				put_px(map, img, (x * map->Xwindows_width) + size, y * map->Ywindows_height, 0xFF0000FF);
+				put_px(map, img, (x * map->Xwindows_width), y * map->Ywindows_height, 0xFF0000FF);
 			else
-				put_px(map, img, (x * map->Xwindows_width) + size, y * map->Ywindows_height, 0x0);
+				put_px(map, img, (x * map->Xwindows_width), y * map->Ywindows_height, 0x0);
 		}
 		y++;
 	}
@@ -76,18 +74,20 @@ void	draw_line_direction(t_map *map)
 	}
 }
 
-void	draw_player(t_plr *ply, mlx_image_t *img)
+void	draw_player(t_map *map, mlx_image_t *img)
 {
 	int i;
 	int j;
+	t_plr *ply;
 
+	ply = map->plr;
 	i = 0;
 	while(i < 360)
 	{
 		j = 0;
 		while(j < ply->radius)
 		{
-			 mlx_put_pixel(img, ply->x + ply->radius + j * cos(i), ply->y + ply->radius + j * sin(i), 0x007258);
+			mlx_put_pixel(img, ply->x + ply->radius + j * cos(i), ply->y + ply->radius + j * sin(i), 0x007258);
 			j++;
 		}
 		i++;
@@ -98,6 +98,6 @@ void	draw_player(t_plr *ply, mlx_image_t *img)
 void	init_mlx(t_map *map)
 {
 	draw_map(map, map->img);
-	draw_player(map->plr, map->img);
+	draw_player(map, map->img);
 	draw_line_direction(map);
 }

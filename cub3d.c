@@ -71,8 +71,8 @@ void	info_player(t_plr *p, t_map *m)
 		{
 			if(m->map_s[y][x] == 'N')
 			{
-				p->x = (x * m->Xwindows_width);
-				p->y = y * m->Ywindows_height;
+				p->x = (x * m->Xwindows_width) + (m->Xwindows_width / 2);
+				p->y = (y * m->Ywindows_height) + (m->Ywindows_height / 2);
 			}
 		}
 	}
@@ -86,9 +86,10 @@ void	info_player(t_plr *p, t_map *m)
 bool	movestp_not_into_wall(t_map *map, double movestp)
 {
 	char test;
-	int x = (map->plr->x + cos(map->plr->retactionangle) * movestp) / map->Xwindows_width;
-	int y = (map->plr->y + sin(map->plr->retactionangle) * movestp) / map->Ywindows_height;
-
+	int x = (map->plr->x + map->plr->radius + cos(map->plr->retactionangle) * movestp) / map->Xwindows_width ;
+	int y = (map->plr->y + map->plr->radius + sin(map->plr->retactionangle) * movestp) / map->Ywindows_height ;
+	if(x < 0 || x > map->width_map || y < 0 || y > map->Ywindows_height)
+		return false;
 	test = map->map_s[y][x];
 	printf("test = %c\n", test);
 	if(test == '1')
@@ -136,7 +137,7 @@ void start_cub3d(t_map *map)
 	map->img = mlx_new_image(map->mlx, map->width_map * 40, map->height_map * 40);
 	if(!map->img || mlx_image_to_window(map->mlx, map->img, 0, 0) < 0)
 		error_mlx();
-	init_mlx(map);
+	//init_mlx(map);
 	mlx_loop_hook(map->mlx, update_key, map);
 	mlx_loop(map->mlx);
 }
@@ -147,42 +148,31 @@ void find_tab_change_it_to_sp(char **map)
 	int	x;
 	int tmp;
 	int y;
-	y = 0;
-	while(map[y])
+	y = -1;
+	while (map[++y])
 	{
-		x = 0;
-		while(map[y][x])
+		x = -1;
+		while (map[y][++x])
 		{
-			
 			if(map[y][x] == '\t')
 			{
 				swap = malloc(ft_strlen(map[y]) + 4 + 1);
-				x = 0;
+				x = -1;
 				tmp = 0;
-				while(map[y][x] != '\t')
-				{
+				while(map[y][++x] != '\t')
 					swap[x] = map[y][x];
-					x++;
-				}
 				while(x + tmp < x + 4)
 					swap[x + tmp++] = ' ';
-				x++;
 				tmp--;
-				while(map[y][x])
-				{
+				while(map[y][++x])
 					swap[x + tmp] = map[y][x];
-					x++;
-				}
 				swap[x + tmp] = 0;
 				free(map[y]);
 				map[y] = swap;
-				x = 0;
+				x = -1;
 			}
-			x++;
 		}
-		y++;
 	}
-	
 }
 
 int main(int ac, char **av)
@@ -216,6 +206,7 @@ int main(int ac, char **av)
 	// 	printf("%s\n", map->map_s[i]);
 	// 	i++;
 	// }
+	// while(1);
 	start_cub3d(map);
 	// mlx_terminate(mlx);
 	// Create and display the image.

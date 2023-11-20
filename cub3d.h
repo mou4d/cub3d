@@ -70,5 +70,5 @@ int		check_map_elements(t_map *map, char **str, char *valid_elements);
 // // utils.c
 void	error_mlx(void);
 void	init_mlx(t_map *map);
-void	draw_player(t_plr *ply, mlx_image_t *img);
+void	draw_player(t_map *map, mlx_image_t *img);
 #endif
