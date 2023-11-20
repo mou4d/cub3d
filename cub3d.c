@@ -141,6 +141,50 @@ void start_cub3d(t_map *map)
 	mlx_loop(map->mlx);
 }
 
+void find_tab_change_it_to_sp(char **map)
+{
+	char *swap;
+	int	x;
+	int tmp;
+	int y;
+	y = 0;
+	while(map[y])
+	{
+		x = 0;
+		while(map[y][x])
+		{
+			
+			if(map[y][x] == '\t')
+			{
+				swap = malloc(ft_strlen(map[y]) + 4 + 1);
+				x = 0;
+				tmp = 0;
+				while(map[y][x] != '\t')
+				{
+					swap[x] = map[y][x];
+					x++;
+				}
+				while(x + tmp < x + 4)
+					swap[x + tmp++] = ' ';
+				x++;
+				tmp--;
+				while(map[y][x])
+				{
+					swap[x + tmp] = map[y][x];
+					x++;
+				}
+				swap[x + tmp] = 0;
+				free(map[y]);
+				map[y] = swap;
+				x = 0;
+			}
+			x++;
+		}
+		y++;
+	}
+	
+}
+
 int main(int ac, char **av)
 {
 	t_map	*map;
@@ -165,6 +209,7 @@ int main(int ac, char **av)
 	if (process_map(map) != 1)
 		return (1);
 	map->map_s = fix_map(map->map_s);
+	find_tab_change_it_to_sp(map->map_s);
 	// i = 0;
 	// while(map->map_s[i])
 	// {

@@ -50,8 +50,6 @@ void	draw_map(t_map *map, mlx_image_t *img)
 		size = 0;
 		while(map->map_s[y][++x])
 		{
-			if(map->map_s[y][x] == '\t')
-				size = size +  (map->Xwindows_width * 3);
 			if(map->map_s[y][x] == '1')
 				put_px(map, img, (x * map->Xwindows_width) + size, y * map->Ywindows_height, 0xFF0000FF);
 			else
