@@ -30,6 +30,8 @@ typedef struct s_player
 	double retactionangle;
 	double speedmv;//move speed
 	double retactionsSpeed;//retaction speed
+	double	fovue_angle;
+	double num_arys;
 } t_plr;
 
 

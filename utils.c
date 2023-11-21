@@ -57,20 +57,34 @@ void	draw_map(t_map *map, mlx_image_t *img)
 	}
 }
 
-void	draw_line_direction(t_map *map)
+void	draw_line_direction(t_map *map, double ray_angle);
+
+void	cast_rays(t_map *map)
+{
+	double rayangle = map->plr->retactionangle - (map->plr->fovue_angle / 2);
+	int i = 0;
+	while(i < map->plr->num_arys)
+	{
+		draw_line_direction(map, rayangle);
+		rayangle = rayangle + (map->plr->fovue_angle / map->plr->num_arys);
+		i++;
+
+	} 
+}
+
+void	draw_line_direction(t_map *map, double ray_angle)
 {
 	int x;
-	int y;
-	y = 0;
-	while(y < 360)
+	x = 0;
+	while(x < 80)
 	{
-		x = 0;
-		while(x < 40)
-		{
-			mlx_put_pixel(map->img, map->plr->x + map->plr->radius + x * cos(map->plr->retactionangle), map->plr->y + map->plr->radius + x * sin(map->plr->retactionangle), 0x007258);
-			x++;
-		}
-		y++;
+		mlx_put_pixel(
+				map->img,
+				map->plr->x + map->plr->radius + x * cos(ray_angle),
+				map->plr->y + map->plr->radius + x * sin(ray_angle),
+				0x007258
+			);
+		x++;
 	}
 }
 
@@ -99,5 +113,6 @@ void	init_mlx(t_map *map)
 {
 	draw_map(map, map->img);
 	draw_player(map, map->img);
-	draw_line_direction(map);
+	cast_rays(map);
+	
 }
