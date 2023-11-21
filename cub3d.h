@@ -73,4 +73,5 @@ int		check_map_elements(t_map *map, char **str, char *valid_elements);
 void	error_mlx(void);
 void	init_mlx(t_map *map);
 void	draw_player(t_map *map, mlx_image_t *img);
+void	draw_line_direction(t_map *map, double ray_angle, int line_px);
 #endif

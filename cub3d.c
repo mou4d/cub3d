@@ -83,7 +83,7 @@ void	info_player(t_plr *p, t_map *m)
 	p->retactionangle = M_PI / 2;
 	p->retactionsSpeed = 2.0 * (M_PI / 180);
 	p->fovue_angle = 60 * (M_PI / 180);
-	p->num_arys = 320;
+	p->num_arys = m->Xwindows_width / 1;
 }
 bool	movestp_not_into_wall(t_map *map, double movestp)
 {

@@ -57,26 +57,43 @@ void	draw_map(t_map *map, mlx_image_t *img)
 	}
 }
 
-void	draw_line_direction(t_map *map, double ray_angle);
+double	make_angle_postive(double angle)
+{
+	angle =  fmod(angle , (2 * M_PI));
+	if(angle < 0)
+		angle = (2 * M_PI) + angle;
+	return angle;
+}
+
+//how many pixil bitween player and wall
+int		hm_px_bw_pyr_and_wall(t_map *map, double rayangle)
+{
+	
+}
 
 void	cast_rays(t_map *map)
 {
-	double rayangle = map->plr->retactionangle - (map->plr->fovue_angle / 2);
+	double rayangle;
+	int px_line;
+	rayangle = make_angle_postive(map->plr->retactionangle - (map->plr->fovue_angle / 2));
+
 	int i = 0;
-	while(i < map->plr->num_arys)
+	map->plr->num_arys;
+	while(i < 1)
 	{
-		draw_line_direction(map, rayangle);
-		rayangle = rayangle + (map->plr->fovue_angle / map->plr->num_arys);
+		px_line = hm_px_bw_pyr_and_wall(map, rayangle);
+		draw_line_direction(map, rayangle, px_line);
+		rayangle = make_angle_postive(rayangle + (map->plr->fovue_angle / map->plr->num_arys));
 		i++;
 
 	} 
 }
 
-void	draw_line_direction(t_map *map, double ray_angle)
+void	draw_line_direction(t_map *map, double ray_angle, int line_px)
 {
 	int x;
 	x = 0;
-	while(x < 80)
+	while(x < line_px)
 	{
 		mlx_put_pixel(
 				map->img,
@@ -113,6 +130,7 @@ void	init_mlx(t_map *map)
 {
 	draw_map(map, map->img);
 	draw_player(map, map->img);
+	// draw_line_direction(map, map->plr->retactionangle);
 	cast_rays(map);
 	
 }
