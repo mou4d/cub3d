@@ -19,6 +19,8 @@ char **fix_map(char **map)
 	int		tmp;
 
 	i = ((tmp = 0) ,0);
+	if(!map)
+		return NULL;
 	while (map[i])
 	{
 		if (ft_strnstr(map[i], "111", ft_strlen(map[i])) != NULL)
@@ -40,7 +42,7 @@ char **fix_map(char **map)
 	
 }
 
-int	strlen_map_width_and_height(char **p, char c)
+int	strlen_map_big_width_and_height(char **p, char c)
 {
 	int	i;
 	int	big_value;
@@ -56,6 +58,14 @@ int	strlen_map_width_and_height(char **p, char c)
 	if(c == 'h')
 		return i;
 	return (big_value);
+}
+
+void strlen_wight_pointer(t_map *map)
+{
+	int	i;
+	i = -1;
+	while(map->map_s[++i])
+		map->width_map[i] = ft_strlen(map->map_s[i]);
 }
 
 void	info_player(t_plr *p, t_map *m)
@@ -88,10 +98,15 @@ void	info_player(t_plr *p, t_map *m)
 bool	movestp_not_into_wall(t_map *map, double movestp)
 {
 	char test;
-	int x = (map->plr->x + map->plr->radius + cos(map->plr->retactionangle) * movestp) / map->Xwindows_width ;
-	int y = (map->plr->y + map->plr->radius + sin(map->plr->retactionangle) * movestp) / map->Ywindows_height ;
-
+	int x;
+	int y;
+	x = ((map->plr->x + cos(map->plr->retactionangle) * movestp) / map->Xwindows_width);
+	y = ((map->plr->y + sin(map->plr->retactionangle) * movestp) / map->Ywindows_height);
+	if(x < 0 || y < 0 || y > map->height_map || x > map->width_map[y])
+		return false;
 	test = map->map_s[y][x];
+	if(test == '1')
+		return false;
 	printf("test = %c\n", test);
 	if(test == '1')
 		return false;
@@ -125,17 +140,20 @@ void update_key(void *tmp)
 
 void start_cub3d(t_map *map)
 {
-	map->Ywindows_height = 40;
-	map->Xwindows_width = 40;
+	int wight_big_value;
+	map->Ywindows_height = 32;
+	map->Xwindows_width = 32;
 	map->plr = malloc(sizeof(t_plr) + 1);
 	if(!map->plr)
 		exit(99);
 	info_player(map->plr, map);
-	map->width_map = strlen_map_width_and_height(map->map_s, 'w');
-	map->height_map = strlen_map_width_and_height(map->map_s, 'h');
-	printf("w = %d, h = %d\n", map->width_map, map->height_map);
-	map->mlx = mlx_init(map->width_map * 40, map->height_map * 40,"cub3d", true);
-	map->img = mlx_new_image(map->mlx, map->width_map * 40, map->height_map * 40);
+	wight_big_value = strlen_map_big_width_and_height(map->map_s, 'w');
+	map->height_map = strlen_map_big_width_and_height(map->map_s, 'h');
+	map->width_map = malloc(map->height_map * sizeof(int));
+	strlen_wight_pointer(map);
+	printf("w = %d, h = %d\n", wight_big_value, map->height_map);
+	map->mlx = mlx_init(wight_big_value * 40, map->height_map * 40,"cub3d", true);
+	map->img = mlx_new_image(map->mlx, wight_big_value * 40, map->height_map * 40);
 	if(!map->img || mlx_image_to_window(map->mlx, map->img, 0, 0) < 0)
 		error_mlx();
 	init_mlx(map);

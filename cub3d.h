@@ -20,6 +20,13 @@
 # include "./lib/libft/libft.h"
 # include "./lib/MLX42/include/MLX42/MLX42.h"
 
+typedef struct s_angle
+{
+	bool 	r_anglefacingdown;
+	bool	r_anglefacingup;
+	bool	r_anglefacingleft;
+	bool	r_anglefacingright;
+} t_angle_facing;
 typedef struct s_player
 {
 	double x;
@@ -42,7 +49,7 @@ typedef struct s_map
 	mlx_image_t *img;
 	int		Xwindows_width;
 	int		Ywindows_height;
-	int		width_map;
+	int		*width_map;
 	int		height_map;
 	char	*map_path;
 	int		map_fd;
@@ -73,5 +80,6 @@ int		check_map_elements(t_map *map, char **str, char *valid_elements);
 void	error_mlx(void);
 void	init_mlx(t_map *map);
 void	draw_player(t_map *map, mlx_image_t *img);
-void	draw_line_direction(t_map *map, double ray_angle, int line_px);
+void	draw_line_direction(t_map *map, double ray_angle, double line_px);
+
 #endif
