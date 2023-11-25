@@ -26,14 +26,23 @@ typedef struct s_angle
 	bool	r_anglefacingup;
 	bool	r_anglefacingleft;
 	bool	r_anglefacingright;
-} t_angle_facing;
+}	t_angle_facing;
+
+typedef struct  s_wall3d
+{
+	double	*rays_angle;
+	double	*small_distance;
+}	t_wall3d;
+
+
 typedef struct s_player
 {
 	double x;
 	double y;
 	double radius;
 	int direction;// turndirection if = 0 >> stable if -1 >> left if +1 to right
-	int move;// walk if = 0 >> not walking if +1 >> to up if >> -1 to back
+	int move_up_down;// walk if = 0 >> not walking if +1 >> to up if >> -1 to back
+	int	move_right_or_left;
 	double retactionangle;
 	double speedmv;//move speed
 	double retactionsSpeed;//retaction speed
@@ -44,24 +53,27 @@ typedef struct s_player
 
 typedef struct s_map
 {
-	t_plr	*plr;
-	mlx_t	*mlx;
-	mlx_image_t *img;
-	int		Xwindows_width;
-	int		Ywindows_height;
-	int		*width_map;
-	int		height_map;
-	char	*map_path;
-	int		map_fd;
-	char	*NO;
-	char	*SO;
-	char	*WE;
-	char	*EA;
-	char	*F;
-	char	*C;
-	char	**map_s;
-	int		init_player_x;
-	int		init_player_y;
+	t_plr		*plr;
+	mlx_t		*mlx;
+	mlx_image_t	*img;
+	t_wall3d	*wall3d;
+	int			Xwindows_width;
+	int			Ywindows_height;
+	int			width_size;
+	int			height_size;
+	int			*width_map;
+	int			height_map;
+	char		*map_path;
+	int			map_fd;
+	char		*NO;
+	char		*SO;
+	char		*WE;
+	char		*EA;
+	char		*F;
+	char		*C;
+	char		**map_s;
+	int			init_player_x;
+	int			init_player_y;
 }	t_map;
 
 //parsing.c

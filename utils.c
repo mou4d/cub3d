@@ -20,23 +20,22 @@ void	error_mlx(void)
 
 void	put_px(t_map *map, mlx_image_t *img, int x, int y, uint32_t color)
 {
-	int tmp = 0;
 	int tx, ty;
 	tx = x;
 	ty = y;
-	while(ty < y + map->Ywindows_height)
+	while(ty < y + map->height_size)
 	{
 		tx = x;
-		while(tx < x + map->Xwindows_width)
+		while(tx < x + map->width_size)
 		{
-			mlx_put_pixel(img, tx, ty, color);
+			mlx_put_pixel(img, 0.2 * tx, 0.2 * ty, color);
 			tx++;
 		}
 		ty++;
 	}
 }
 
-void	draw_map(t_map *map, mlx_image_t *img)
+void	draw_mini_map(t_map *map, mlx_image_t *img)
 {
 	int x;
 	int y;
@@ -49,9 +48,9 @@ void	draw_map(t_map *map, mlx_image_t *img)
 		while(map->map_s[y][++x])
 		{
 			if(map->map_s[y][x] == '1')
-				put_px(map, img, (x * map->Xwindows_width), y * map->Ywindows_height, 0xFF0000FF);
+				put_px(map, img, (x * map->width_size), y * map->height_size, 0xFF0000FF);
 			else
-				put_px(map, img, (x * map->Xwindows_width), y * map->Ywindows_height, 0x0);
+				put_px(map, img, (x * map->width_size), y * map->height_size, 0x0);
 		}
 		y++;
 	}
@@ -103,7 +102,7 @@ void	angle_facing(t_angle_facing *mongol, double rayangle)
 	    mongol->r_anglefacingdown = false;
 	}
 
-	if (rayangle < ((3 * M_PI) / 2) && rayangle > M_PI / 2) {
+	if (rayangle < (1.5 * M_PI) && rayangle > M_PI_2) {
 	    mongol->r_anglefacingleft = true;
 	    mongol->r_anglefacingright = false;
 	}
@@ -122,17 +121,15 @@ double  find_y_horztouch(t_map *map, double rayangle, t_angle_facing *a_f)
 	double distance = 0;
 	double xintercept, yintercept;
 	double xstep, ystep;
-	bool hit_or_not;
-	hit_or_not = false;
-	yintercept = floor(map->plr->y / map->Ywindows_height) * map->Ywindows_height;
+	yintercept = floor(map->plr->y / map->height_size) * map->height_size;
 	if (a_f->r_anglefacingdown == true)
-	    yintercept += map->Ywindows_height;
+	    yintercept += map->height_size;
 	xintercept = map->plr->x + (((yintercept - map->plr->y) )/ tan(rayangle));
-	ystep = map->Ywindows_height;
+	ystep = map->height_size;
 	if (a_f->r_anglefacingup == true)
 	    ystep *= -1;
 
-	xstep = map->Xwindows_width / tan(rayangle);
+	xstep = map->width_size / tan(rayangle);
 	if(a_f->r_anglefacingleft && xstep > 0)
 		xstep *= -1;
 	if(a_f->r_anglefacingright && xstep < 0)
@@ -145,20 +142,18 @@ double  find_y_horztouch(t_map *map, double rayangle, t_angle_facing *a_f)
 
 	if(a_f->r_anglefacingup)
 		y_wallhit--;
-	x = x_wallhit / map->Xwindows_width;
-	y = y_wallhit / map->Ywindows_height;
+	x = x_wallhit / map->width_size;
+	y = y_wallhit / map->height_size;
 	while (x >= 0 && y >= 0 && y < map->height_map &&  x <= map->width_map[y] && y_wallhit >= 0)
 	{
-	    if (map->map_s[y][x] == '1') {
-			hit_or_not = true;
+	    if (map->map_s[y][x] == '1')
 	        break;
-	    }
 		else
 		{
 	        x_wallhit += xstep;
 	        y_wallhit += ystep;
-	        x = x_wallhit / map->Xwindows_width;
-	    	y = y_wallhit / map->Ywindows_height;
+	        x = x_wallhit / map->width_size;
+	    	y = y_wallhit / map->height_size;
 	    }
 	}
 	return calculate_distance(map->plr->x, map->plr->y, x_wallhit, y_wallhit);
@@ -174,15 +169,15 @@ double find_x_verticletouch(t_map *map, double rayangle, t_angle_facing *a_f)
 	double xstep, ystep;
 	bool hit_or_not;
 
-	xintercept = floor(map->plr->x / map->Xwindows_width) * map->Xwindows_width;
+	xintercept = floor(map->plr->x / map->width_size) * map->width_size;
 	if (a_f->r_anglefacingright == true)
-	    xintercept += map->Xwindows_width;
+	    xintercept += map->width_size;
 	yintercept = map->plr->y + ((xintercept - map->plr->x)  * tan(rayangle));
-	xstep = map->Xwindows_width;
+	xstep = map->width_size;
 	if (a_f->r_anglefacingleft  == true)
 	    xstep *= -1;
 
-	ystep = map->Ywindows_height * tan(rayangle);
+	ystep = map->height_size * tan(rayangle);
 	if(a_f->r_anglefacingup && ystep > 0)
 		ystep *= -1;
 	if(a_f->r_anglefacingdown && ystep < 0)
@@ -193,8 +188,8 @@ double find_x_verticletouch(t_map *map, double rayangle, t_angle_facing *a_f)
 
 	if(a_f->r_anglefacingleft)
 		x_wallhit--;
-	x = x_wallhit / map->Xwindows_width;
-	y = y_wallhit / map->Ywindows_height;
+	x = x_wallhit / map->width_size;
+	y = y_wallhit / map->height_size;
 	hit_or_not = false;
 	while (x >= 0 && y >= 0 && y < map->height_map &&  x <= map->width_map[y] && y_wallhit >= 0)
 	{
@@ -206,14 +201,14 @@ double find_x_verticletouch(t_map *map, double rayangle, t_angle_facing *a_f)
 		{
 	        x_wallhit += xstep;
 	        y_wallhit += ystep;
-	        x = x_wallhit / map->Xwindows_width;
-	    	y = y_wallhit / map->Ywindows_height;
+	        x = x_wallhit / map->width_size;
+	    	y = y_wallhit / map->height_size;
 	    }
 	}
 	return calculate_distance(map->plr->x, map->plr->y, x_wallhit, y_wallhit);
 }
 
-void	hm_px_bw_pyr_and_wall(t_map *map,double rayangle)
+double	hm_px_bw_pyr_and_wall(t_map *map,double rayangle)
 {
 	int x, y;
 	double xdistance;
@@ -226,11 +221,11 @@ void	hm_px_bw_pyr_and_wall(t_map *map,double rayangle)
 	ydistance = find_y_horztouch(map, rayangle, a_f);
 	xdistance = find_x_verticletouch(map, rayangle, a_f);
 	if(ydistance < xdistance)
-		draw_line_direction(map, rayangle, ydistance);
+		return ydistance;
 	else
-		draw_line_direction(map, rayangle, xdistance);
+		return xdistance;
 }
-
+//draw_line_direction(map, rayangle, xdistance);
 void	cast_rays(t_map *map)
 {
 	double rayangle;
@@ -240,9 +235,9 @@ void	cast_rays(t_map *map)
 	int i = 0;
 	while(i < map->plr->num_arys)
 	{
-		printf("ray angle = %f\n", rayangle);
-		hm_px_bw_pyr_and_wall(map, rayangle);
-		// draw_line_direction(map, rayangle, px_line);
+		map->wall3d->rays_angle[i] = rayangle;
+		map->wall3d->small_distance[i] = hm_px_bw_pyr_and_wall(map, rayangle);
+		draw_line_direction(map, map->wall3d->rays_angle[i], map->wall3d->small_distance[i]);
 		rayangle = make_angle_postive(rayangle + (map->plr->fovue_angle / map->plr->num_arys));
 		i++;
 	} 
@@ -256,8 +251,8 @@ void	draw_line_direction(t_map *map, double ray_angle, double line_px)
 	{
 		mlx_put_pixel(
 				map->img,
-				map->plr->x + x * cos(ray_angle),
-				map->plr->y + x * sin(ray_angle),
+				0.2 * (map->plr->x + x * cos(ray_angle)),
+				0.2 * (map->plr->y + x * sin(ray_angle)),
 				0x007258
 			);
 		x++;
@@ -271,32 +266,55 @@ void	draw_player(t_map *map, mlx_image_t *img)
 	t_plr *ply;
 
 	ply = map->plr;
-	x = ply->x  - ply->radius;	
+	x = ply->x  - ply->radius;
 	while (x <= ply->x + ply->radius)
 	{
 		y = ply->y - ply->radius;
 		while(y <= ply->y + ply->radius)
 		{
 			if(((x - ply->x) * (x - ply->x)) + ((y - ply->y) * ((y - ply->y))) <= (ply->radius * ply->radius))
-				mlx_put_pixel(img, x, y, 0x007258);
+				mlx_put_pixel(img, 0.2 * x, 0.2 * y, 0x007258);
 			y++;
 		}
 		x++;
 	}
 }
 
+void	draw_wall_3d(t_map *map,	int x, int y, int wight, int height)
+{
+	int i;
+	int j;
+	j = x;
+	while (j < x + wight)
+	{
+		i = y;
+		while(i < y + height)
+		{
+			mlx_put_pixel(map->img, j, i, 0x007258);
+			i++;
+		}
+		j++;
+	}
+}
+
+void	wall_3d(t_map *map)
+{
+	double distance_to_projection_plane;
+	double 	wall_strip_height;
+	int i = 0;
+	while(i < map->plr->num_arys)
+	{
+		distance_to_projection_plane = (1910 / 2) / tan(map->plr->fovue_angle / 2);
+		wall_strip_height = (32 / map->wall3d->small_distance[i]) * distance_to_projection_plane;
+		draw_wall_3d(map,i , (1910/2) - (wall_strip_height / 2),1, wall_strip_height);
+		i++;
+	}
+}
 
 void	init_mlx(t_map *map)
 {
-	draw_map(map, map->img);
+	draw_mini_map(map, map->img);
 	draw_player(map, map->img);
-	draw_line_direction(map, map->plr->retactionangle ,30);
-	mlx_put_pixel(
-				map->img,
-				map->plr->x,
-				map->plr->y,
-				0xFF0000FF
-			);
 	cast_rays(map);
-	
+	// wall_3d(map);
 }

@@ -51,7 +51,7 @@ int	strlen_map_big_width_and_height(char **p, char c)
 	big_value = 0;
 	while (p && p[i])
 	{
-		if(ft_strlen(p[i]) >= big_value)
+		if(ft_strlen(p[i]) >= (size_t)big_value)
 			big_value = ft_strlen(p[i]);
 		i++;	
 	}
@@ -81,69 +81,113 @@ void	info_player(t_plr *p, t_map *m)
 		{
 			if(m->map_s[y][x] == 'N')
 			{
-				p->x = (x * m->Xwindows_width);
-				p->y = (y * m->Ywindows_height);
+				p->x = (x * m->width_size);
+				p->y = (y * m->height_size);
 			}
 		}
 	}
 	p->direction = 0;
-	p->move = 0;
-	p->radius = 8.0;
-	p->speedmv = 2.0; //pix
+	p->move_up_down = 0;
+	p->move_right_or_left= 0;
+	p->radius = m->width_size * 0.3;
+	p->speedmv = 2; //pix
 	p->retactionangle = M_PI / 2;
-	p->retactionsSpeed = 2.0 * (M_PI / 180);
+	p->retactionsSpeed = 1 * (M_PI / 180);
 	p->fovue_angle = 60 * (M_PI / 180);
-	p->num_arys = m->Xwindows_width / 1;
+	p->num_arys = 120;
 }
-bool	movestp_not_into_wall(t_map *map, double movestp)
+
+bool	movestp_not_into_wall(t_map *map, double movestp , double M)
 {
 	char test;
 	int x;
 	int y;
-	x = ((map->plr->x + cos(map->plr->retactionangle) * movestp) / map->Xwindows_width);
-	y = ((map->plr->y + sin(map->plr->retactionangle) * movestp) / map->Ywindows_height);
+	x = ((map->plr->x + cos(map->plr->retactionangle + M) * movestp) / map->width_size);
+	y = ((map->plr->y + sin(map->plr->retactionangle + M) * movestp) / map->height_size);
 	if(x < 0 || y < 0 || y > map->height_map || x > map->width_map[y])
 		return false;
 	test = map->map_s[y][x];
 	if(test == '1')
 		return false;
-	printf("test = %c\n", test);
 	if(test == '1')
 		return false;
 	return true;
 }
 
+// void update_key(void *tmp)
+// {
+// 	double movestp;
+// 	t_map *map = (t_map *)tmp;
+// 	if (mlx_is_key_down(map->mlx, MLX_KEY_W) == true)
+// 		map->plr->move_up_down = 1; 
+// 	else if (mlx_is_key_down(map->mlx, MLX_KEY_S) == true)
+// 		map->plr->move_up_down = -1;
+// 	else if (mlx_is_key_down(map->mlx, MLX_KEY_D) == true)
+// 		map->plr->move_up_down = ;
+// 	else if (mlx_is_key_down(map->mlx, MLX_KEY_A) == true)
+// 		map->plr->move_up_down = ;
+// 	else if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT) == true)
+// 		map->plr->direction = 1;
+// 	else if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT) == true)
+// 		map->plr->direction = -1;
+// 	map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
+// 	movestp = map->plr->move_up_down * map->plr->speedmv;
+// 	if(movestp_not_into_wall(map, movestp) == true)
+// 	{
+// 		map->plr->x += cos(map->plr->retactionangle) * movestp;
+// 		map->plr->y += sin(map->plr->retactionangle) * movestp;
+// 	}
+// 	init_mlx(map);
+// 	movestp = 0;
+// 	map->plr->move_up_down = 0; 
+// 	map->plr->direction = 0;
+// }
 void update_key(void *tmp)
 {
-	double movestp;
-	t_map *map = (t_map *)tmp;
-	if (mlx_is_key_down(map->mlx, MLX_KEY_W) == true)
-		map->plr->move = 1; 
-	else if (mlx_is_key_down(map->mlx, MLX_KEY_S) == true)
-		map->plr->move = -1;
-	else if (mlx_is_key_down(map->mlx, MLX_KEY_A) == true)
-		map->plr->direction = 1;
-	else if (mlx_is_key_down(map->mlx, MLX_KEY_D) == true)
-		map->plr->direction = -1;
-	map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
-	movestp = map->plr->move * map->plr->speedmv;
-	if(movestp_not_into_wall(map, movestp) == true)
-	{
-		map->plr->x += cos(map->plr->retactionangle) * movestp;
-		map->plr->y += sin(map->plr->retactionangle) * movestp;
+    double movestp;
+    t_map *map = (t_map *)tmp;
+
+  	map->plr->move_up_down = 0; 
+    map->plr->move_right_or_left = 0;
+    map->plr->direction = 0;
+    if (mlx_is_key_down(map->mlx, MLX_KEY_W) == true)
+        map->plr->move_up_down = 1;
+    else if (mlx_is_key_down(map->mlx, MLX_KEY_S) == true)
+        map->plr->move_up_down = -1;
+    if (mlx_is_key_down(map->mlx, MLX_KEY_D) == true)
+        map->plr->move_right_or_left = 1; // Move right
+    else if (mlx_is_key_down(map->mlx, MLX_KEY_A) == true)
+        map->plr->move_right_or_left = -1; // Move left
+    if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT) == true)
+        map->plr->direction = -1;
+    else if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT) == true)
+        map->plr->direction = 1;
+    map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
+    movestp = map->plr->move_up_down * map->plr->speedmv;
+    if (movestp_not_into_wall(map, movestp, 0) == true)
+    {
+        map->plr->x += cos(map->plr->retactionangle) * movestp;
+        map->plr->y += sin(map->plr->retactionangle) * movestp;
+		movestp = 0;
+    }
+    movestp  = map->plr->move_right_or_left * map->plr->speedmv;
+    if (movestp_not_into_wall(map, movestp, M_PI_2) == true)
+    {
+        map->plr->x += cos(map->plr->retactionangle + M_PI_2) * movestp;
+        map->plr->y += sin(map->plr->retactionangle + M_PI_2) * movestp;
 	}
-	init_mlx(map);
-	movestp = 0;
-	map->plr->move = 0; 
-	map->plr->direction = 0;
+    init_mlx(map);
 }
+
 
 void start_cub3d(t_map *map)
 {
 	int wight_big_value;
-	map->Ywindows_height = 32;
-	map->Xwindows_width = 32;
-	map->plr = malloc(sizeof(t_plr) + 1);
+	map->Xwindows_width = 1910;
+	map->Ywindows_height = 1000;
+	map->height_size = 60;
+	map->width_size = 60;
+	map->plr = malloc(sizeof(t_plr));
 	if(!map->plr)
 		exit(99);
 	info_player(map->plr, map);
@@ -152,8 +196,11 @@ void start_cub3d(t_map *map)
 	map->width_map = malloc(map->height_map * sizeof(int));
 	strlen_wight_pointer(map);
 	printf("w = %d, h = %d\n", wight_big_value, map->height_map);
-	map->mlx = mlx_init(wight_big_value * 40, map->height_map * 40,"cub3d", true);
-	map->img = mlx_new_image(map->mlx, wight_big_value * 40, map->height_map * 40);
+	map->wall3d = malloc(sizeof(t_wall3d));
+	map->wall3d->rays_angle = (double *)malloc(sizeof(double) * map->plr->num_arys);
+	map->wall3d->small_distance = (double *)malloc(sizeof(double) * map->plr->num_arys);
+	map->mlx = mlx_init(map->Xwindows_width, map->Ywindows_height,"cub3d", true);
+	map->img = mlx_new_image(map->mlx, map->Xwindows_width, map->Ywindows_height);
 	if(!map->img || mlx_image_to_window(map->mlx, map->img, 0, 0) < 0)
 		error_mlx();
 	init_mlx(map);
@@ -197,7 +244,7 @@ void find_tab_change_it_to_sp(char **map)
 int main(int ac, char **av)
 {
 	t_map	*map;
-	int		i;
+	// int		i;
 	
 	if (ac < 2)
 		return (printf("Error\n"));
