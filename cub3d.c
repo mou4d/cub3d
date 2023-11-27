@@ -94,7 +94,7 @@ void	info_player(t_plr *p, t_map *m)
 	p->retactionangle = M_PI / 2;
 	p->retactionsSpeed = 1 * (M_PI / 180);
 	p->fovue_angle = 60 * (M_PI / 180);
-	p->num_arys = 120;
+	p->num_arys = 320;
 }
 
 bool	movestp_not_into_wall(t_map *map, double movestp , double M)
@@ -183,10 +183,10 @@ void update_key(void *tmp)
 void start_cub3d(t_map *map)
 {
 	int wight_big_value;
-	map->Xwindows_width = 1910;
+	map->Xwindows_width = 1000;
 	map->Ywindows_height = 1000;
-	map->height_size = 60;
-	map->width_size = 60;
+	map->height_size = 50;
+	map->width_size = 50;
 	map->plr = malloc(sizeof(t_plr));
 	if(!map->plr)
 		exit(99);

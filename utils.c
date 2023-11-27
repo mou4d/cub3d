@@ -280,39 +280,27 @@ void	draw_player(t_map *map, mlx_image_t *img)
 	}
 }
 
-void	draw_wall_3d(t_map *map,	int x, int y, int wight, int height)
-{
-	int i;
-	int j;
-	j = x;
-	while (j < x + wight)
-	{
-		i = y;
-		while(i < y + height)
-		{
-			mlx_put_pixel(map->img, j, i, 0x007258);
-			i++;
-		}
-		j++;
-	}
-}
 
-void	wall_3d(t_map *map)
+void	clear_windows(t_map *map)
 {
-	double distance_to_projection_plane;
-	double 	wall_strip_height;
-	int i = 0;
-	while(i < map->plr->num_arys)
+	int x;
+	int y;
+	x = 0;
+	while(x < map->Xwindows_width)
 	{
-		distance_to_projection_plane = (1910 / 2) / tan(map->plr->fovue_angle / 2);
-		wall_strip_height = (32 / map->wall3d->small_distance[i]) * distance_to_projection_plane;
-		draw_wall_3d(map,i , (1910/2) - (wall_strip_height / 2),1, wall_strip_height);
-		i++;
+		y = 0;
+		while (y < map->Ywindows_height)
+		{
+			mlx_put_pixel(map->img, x, y, 0x000000);
+			y++;
+		}
+		x++;
 	}
 }
 
 void	init_mlx(t_map *map)
 {
+	clear_windows(map);
 	draw_mini_map(map, map->img);
 	draw_player(map, map->img);
 	cast_rays(map);
