@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/28 19:17:27 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/11/28 19:22:46 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,34 +114,6 @@ bool	movestp_not_into_wall(t_map *map, double movestp , double M)
 	return true;
 }
 
-// void update_key(void *tmp)
-// {
-// 	double movestp;
-// 	t_map *map = (t_map *)tmp;
-// 	if (mlx_is_key_down(map->mlx, MLX_KEY_W) == true)
-// 		map->plr->move_up_down = 1; 
-// 	else if (mlx_is_key_down(map->mlx, MLX_KEY_S) == true)
-// 		map->plr->move_up_down = -1;
-// 	else if (mlx_is_key_down(map->mlx, MLX_KEY_D) == true)
-// 		map->plr->move_up_down = ;
-// 	else if (mlx_is_key_down(map->mlx, MLX_KEY_A) == true)
-// 		map->plr->move_up_down = ;
-// 	else if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT) == true)
-// 		map->plr->direction = 1;
-// 	else if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT) == true)
-// 		map->plr->direction = -1;
-// 	map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
-// 	movestp = map->plr->move_up_down * map->plr->speedmv;
-// 	if(movestp_not_into_wall(map, movestp) == true)
-// 	{
-// 		map->plr->x += cos(map->plr->retactionangle) * movestp;
-// 		map->plr->y += sin(map->plr->retactionangle) * movestp;
-// 	}
-// 	init_mlx(map);
-// 	movestp = 0;
-// 	map->plr->move_up_down = 0; 
-// 	map->plr->direction = 0;
-// }
 void update_key(void *tmp)
 {
     double movestp;
