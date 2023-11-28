@@ -59,8 +59,7 @@ typedef struct s_map
 	t_wall3d	*wall3d;
 	int			Xwindows_width;
 	int			Ywindows_height;
-	int			width_size;
-	int			height_size;
+	int			size_wall_y_x;
 	int			*width_map;
 	int			height_map;
 	char		*map_path;

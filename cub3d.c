@@ -81,20 +81,20 @@ void	info_player(t_plr *p, t_map *m)
 		{
 			if(m->map_s[y][x] == 'N')
 			{
-				p->x = (x * m->width_size);
-				p->y = (y * m->height_size);
+				p->x = (x * m->size_wall_y_x);
+				p->y = (y * m->size_wall_y_x);
 			}
 		}
 	}
 	p->direction = 0;
 	p->move_up_down = 0;
 	p->move_right_or_left= 0;
-	p->radius = m->width_size * 0.3;
+	p->radius = m->size_wall_y_x * 0.3;
 	p->speedmv = 2; //pix
 	p->retactionangle = M_PI / 2;
-	p->retactionsSpeed = 1 * (M_PI / 180);
+	p->retactionsSpeed = 2 * (M_PI / 180);
 	p->fovue_angle = 60 * (M_PI / 180);
-	p->num_arys = 320;
+	p->num_arys = m->Xwindows_width;
 }
 
 bool	movestp_not_into_wall(t_map *map, double movestp , double M)
@@ -102,8 +102,8 @@ bool	movestp_not_into_wall(t_map *map, double movestp , double M)
 	char test;
 	int x;
 	int y;
-	x = ((map->plr->x + cos(map->plr->retactionangle + M) * movestp) / map->width_size);
-	y = ((map->plr->y + sin(map->plr->retactionangle + M) * movestp) / map->height_size);
+	x = ((map->plr->x + cos(map->plr->retactionangle + M) * movestp) / map->size_wall_y_x);
+	y = ((map->plr->y + sin(map->plr->retactionangle + M) * movestp) / map->size_wall_y_x);
 	if(x < 0 || y < 0 || y > map->height_map || x > map->width_map[y])
 		return false;
 	test = map->map_s[y][x];
@@ -183,10 +183,9 @@ void update_key(void *tmp)
 void start_cub3d(t_map *map)
 {
 	int wight_big_value;
-	map->Xwindows_width = 1000;
-	map->Ywindows_height = 1000;
-	map->height_size = 50;
-	map->width_size = 50;
+	map->Xwindows_width = 1150;
+	map->Ywindows_height = 600;
+	map->size_wall_y_x = 80;
 	map->plr = malloc(sizeof(t_plr));
 	if(!map->plr)
 		exit(99);
