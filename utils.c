@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:41 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/17 22:58:58 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/11/28 19:12:31 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	put_px(t_map *map, mlx_image_t *img, int x, int y, uint32_t color)
 		tx = x;
 		while(tx < x + map->size_wall_y_x)
 		{
-			mlx_put_pixel(img, 0.0 * tx, 0.0 * ty, color);
+			mlx_put_pixel(img, 0.09 * tx, 0.09 * ty, color);
 			tx++;
 		}
 		ty++;
@@ -203,7 +203,7 @@ double	hm_px_bw_pyr_and_wall(t_map *map,double rayangle)
 	else
 		return xdistance;
 }
-//draw_line_direction(map, rayangle, xdistance);
+
 void	cast_rays(t_map *map)
 {
 	double rayangle;
@@ -228,8 +228,8 @@ void	draw_line_direction(t_map *map, double ray_angle, double line_px)
 	{
 		mlx_put_pixel(
 				map->img,
-				0.0 * (map->plr->x + x * cos(ray_angle)),
-				0.0 * (map->plr->y + x * sin(ray_angle)),
+				0.09 * (map->plr->x + x * cos(ray_angle)),
+				0.09 * (map->plr->y + x * sin(ray_angle)),
 				0xa54848
 			);
 		x++;
@@ -250,7 +250,7 @@ void	draw_player(t_map *map, mlx_image_t *img)
 		while(y <= ply->y + ply->radius)
 		{
 			if(((x - ply->x) * (x - ply->x)) + ((y - ply->y) * ((y - ply->y))) <= (ply->radius * ply->radius))
-				mlx_put_pixel(img, 0.0 * x, 0.0 * y, 0x007258);
+				mlx_put_pixel(img, 0.09 * x, 0.09 * y, 0x007258);
 			y++;
 		}
 		x++;
@@ -301,6 +301,7 @@ void wall_3d(t_map *map)
 	{
 		double distance_proje_plan = (map->Xwindows_width / 2) / tan(map->plr->fovue_angle / 2);
 		wall_height = (map->size_wall_y_x / map->wall3d->small_distance[i]) * (distance_proje_plan);
+		//printf("dis %f\n", map->wall3d->small_distance[i]);
 		y = (map->Ywindows_height / 2) - (wall_height / 2);
 		x = i;
 		if (y < 0)
@@ -308,10 +309,9 @@ void wall_3d(t_map *map)
 		endx = 1 + i;
 		if(endx > map->Xwindows_width)
 			endx = map->Xwindows_width;
-		endy = wall_height;
+		endy = (map->Ywindows_height / 2) + (wall_height / 2);
 		if(endy > map->Ywindows_height)
 			endy = map->Ywindows_height;
-		// printf("x = %d\n", end);
 		// printf("angle == %f, wall_ == %f\n", map->wall3d->small_distance[i], wall_height);
 		draw_wall_3d(map, x, y, endx, endy);
 		i++;

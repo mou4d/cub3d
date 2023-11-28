@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/17 19:49:18 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/11/28 19:17:27 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	info_player(t_plr *p, t_map *m)
 	p->move_up_down = 0;
 	p->move_right_or_left= 0;
 	p->radius = m->size_wall_y_x * 0.3;
-	p->speedmv = 2; //pix
+	p->speedmv = 3; //pix
 	p->retactionangle = M_PI / 2;
 	p->retactionsSpeed = 2 * (M_PI / 180);
 	p->fovue_angle = 60 * (M_PI / 180);
@@ -183,9 +183,9 @@ void update_key(void *tmp)
 void start_cub3d(t_map *map)
 {
 	int wight_big_value;
-	map->Xwindows_width = 1150;
-	map->Ywindows_height = 600;
-	map->size_wall_y_x = 80;
+	map->Xwindows_width = 1200;
+	map->Ywindows_height = 700;
+	map->size_wall_y_x = 64;
 	map->plr = malloc(sizeof(t_plr));
 	if(!map->plr)
 		exit(99);
