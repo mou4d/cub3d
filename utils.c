@@ -261,13 +261,29 @@ void	clear_windows(t_map *map)
 {
 	int x;
 	int y;
+	uint32_t color;
+	uint32_t color1;
+	uint32_t color2;
 	x = 0;
+	color1 = ((ft_atoi(map->C) << 16) |
+			(ft_atoi(ft_strchr(map->C, ',') + 1) << 8) |
+			(ft_atoi(1 + ft_strrchr((1 + ft_strchr(map->C, ',')), ',')))
+		);
+	color2 = ((ft_atoi(map->F) << 16) |
+			(ft_atoi(ft_strchr(map->F, ',') + 1) << 8) |
+			ft_atoi(1 + ft_strrchr((1 + ft_strchr(map->F, ',')), ','))
+		);
+	// printf("%d\n", color1);
+	// printf("%d\n", color2);
 	while(x < map->Xwindows_width)
 	{
+		color = color1;
 		y = 0;
 		while (y < map->Ywindows_height)
 		{
-			mlx_put_pixel(map->img, x, y, 0x000000);
+			if(y > map->Ywindows_height / 2)
+				color = color2;
+			mlx_put_pixel(map->img, x, y, color);
 			y++;
 		}
 		x++;
@@ -296,11 +312,13 @@ void wall_3d(t_map *map)
 	int y = 0;
 	int endx = 0;
 	int endy = 0;
+	double correct_distance;
 	double wall_height;
 	while(i < map->plr->num_arys)
 	{
 		double distance_proje_plan = (map->Xwindows_width / 2) / tan(map->plr->fovue_angle / 2);
-		wall_height = (map->size_wall_y_x / map->wall3d->small_distance[i]) * (distance_proje_plan);
+		correct_distance = map->wall3d->small_distance[i] * cos(map->wall3d->rays_angle[i] - map->plr->retactionangle);
+		wall_height = (map->size_wall_y_x / correct_distance) * (distance_proje_plan);
 		//printf("dis %f\n", map->wall3d->small_distance[i]);
 		y = (map->Ywindows_height / 2) - (wall_height / 2);
 		x = i;
