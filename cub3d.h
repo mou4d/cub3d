@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/17 22:47:55 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/11/30 19:45:57 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
+# include <errno.h>
 # include "./lib/libft/libft.h"
 # include "./lib/MLX42/include/MLX42/MLX42.h"
 
@@ -103,5 +104,10 @@ void	error_mlx(void);
 void	init_mlx(t_map *map);
 void	draw_player(t_map *map, mlx_image_t *img);
 void	draw_line_direction(t_map *map, double ray_angle, double line_px);
+
+// errors.c
+void	error_(char *custom_error, char *file_name);
+void	free_2d_array(char **var);
+int		check_texture_file(char **type_id); //to be moved to another file later
 
 #endif

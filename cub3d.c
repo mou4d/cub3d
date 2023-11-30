@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/28 19:22:46 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/11/30 19:53:51 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,16 +248,8 @@ int main(int ac, char **av)
 	// 	return (printf("Error\n"));
 	map = read_map(av[1]);
 	if (map == NULL)
-		return (printf("Error\n"));
-	// i = 0;
-	// while(map->map_s[i])
-	// {
-	// 	printf("%s\n", map->map_s[i]);
-	// 	i++;
-	// }
-	if (process_type_ids(map) != 6)
-		return (1);
-	
+		error_("Unkown error occured check your map file.", NULL);
+	process_type_ids(map);
 	if (process_map(map) != 1)
 		return (1);
 	find_tab_change_it_to_sp(map->map_s);
@@ -269,7 +261,8 @@ int main(int ac, char **av)
 	// 	i++;
 	// }
 	// while(1);
-	start_cub3d(map);
+	//start_cub3d(map);
+	printf("map processed correctly (y). \n");
 	// mlx_terminate(mlx);
 	// Create and display the image.
 	// printf("#################\n");

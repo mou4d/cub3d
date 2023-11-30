@@ -6,36 +6,38 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 20:57:09 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/12 12:44:56 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/11/30 19:49:03 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_type_id(char	*type_id, int *count)
+int	check_type_id(char	*type_id, int count)
 {
 	int		ret;
 	char	**tmp;
 
-	ret = *count;
+	ret = count;
 	tmp = ft_split(type_id, ' ');
-	if (ft_strncmp(tmp[0], "NO", 2) == 0
-		|| ft_strncmp(tmp[0], "SO", 2) == 0
-		||ft_strncmp(tmp[0], "WE", 2) == 0
-		|| ft_strncmp(tmp[0], "EA", 2) == 0)
+	if (ft_strncmp(tmp[0], "NO", 3) == 0
+		|| ft_strncmp(tmp[0], "SO", 3) == 0
+		||ft_strncmp(tmp[0], "WE", 3) == 0
+		|| ft_strncmp(tmp[0], "EA", 3) == 0)
 	{
-		if (tmp[0][2] == '\0')
-			ret += 1;
-		else
-			ret = 0;
+		// if (tmp[0][2] == '\0')
+		// 	ret += 1;
+		// else
+		// 	ret = 0;
+		check_texture_file(tmp);
+		ret += 1;
 	}
 	else if ((tmp[0][0] == 'F' && tmp[0][1] == '\0')
 			|| (tmp[0][0] == 'C' && tmp[0][1] == '\0'))
 		ret += 1;
 	else
 		ret = 0;
-	free(tmp);
-	return(ret);
+	free_2d_array(tmp);
+	return (ret);
 }
 
 void	init_type_ids(t_map *map, char *type)
@@ -45,6 +47,11 @@ void	init_type_ids(t_map *map, char *type)
 	tmp = ft_split(type, ' ');
 	if (tmp == NULL)
 		return ;
+	if (tmp[1] == NULL)
+	{
+		free_2d_array(tmp);
+		error_("All type identifers need to have a value !", NULL);
+	}
 	if (tmp[0][0] == 'F' && tmp[0][1] == '\0')
 		map->F = ft_strdup(tmp[1]);
 	else if (tmp[0][0] == 'C' && tmp[0][1] == '\0')
@@ -57,7 +64,7 @@ void	init_type_ids(t_map *map, char *type)
 		map->WE = ft_strdup(tmp[1]);
 	else if (ft_strncmp(tmp[0], "EA", 2) == 0)
 		map->EA = ft_strdup(tmp[1]);
-	free(tmp);
+	free_2d_array(tmp);
 }
 
 /// @brief process map and initialize the type ids in map struct
@@ -76,7 +83,7 @@ int	process_type_ids(t_map *map)
 		if (!ft_isalpha(map->map_s[i][0]) && count <= 6) 
 			break ;
 		// check content of line 
-		count = check_type_id(map->map_s[i], &count);
+		count = check_type_id(map->map_s[i], count);
 		// break if this line doesn't contain a type id
 		if (count == 0)
 			break ;
@@ -86,7 +93,7 @@ int	process_type_ids(t_map *map)
 	}
 	// if something happened and we didn't get all type ids
 	if (count != 6)
-		printf("Error\n");
+		error_("Check if all the 6 type identifiers are in a correct format !", NULL);
 	return (count);
 }
 
@@ -103,12 +110,14 @@ t_map	*read_map(char *file)
 	ret = NULL;
 	fd = open(file, O_RDONLY);
 	if (fd < 3)
-		return (NULL);
+		error_(NULL, file);
 	r_count = read(fd, buff, BUFSIZ);
 	if (r_count <= 0)
-		return (NULL);
+		error_(NULL, NULL);
 	buff[r_count] = '\0';
-	ret = malloc(sizeof(t_map));
+	ret = (t_map *) malloc(sizeof(t_map));
+	if (!ret)
+		return (NULL);
 	ret->map_fd = fd;
 	ret->map_s = ft_split(buff, '\n');
 	ret->init_player_x = -1;
