@@ -186,7 +186,7 @@ double find_x_verticletouch(t_map *map, double rayangle, t_angle_facing *a_f)
 	return calculate_distance(map->plr->x, map->plr->y, x_wallhit, y_wallhit);
 }
 
-double	hm_px_bw_pyr_and_wall(t_map *map,double rayangle)
+double	hm_px_bw_pyr_and_wall(t_map *map,double rayangle, int i)
 {
 	int x, y;
 	double xdistance;
@@ -199,9 +199,11 @@ double	hm_px_bw_pyr_and_wall(t_map *map,double rayangle)
 	ydistance = find_y_horztouch(map, rayangle, a_f);
 	xdistance = find_x_verticletouch(map, rayangle, a_f);
 	if(ydistance < xdistance)
+	{
 		return ydistance;
-	else
-		return xdistance;
+	}
+	map->wall3d->x_vertical[i] = true;
+	return xdistance;
 }
 
 void	cast_rays(t_map *map)
@@ -214,7 +216,8 @@ void	cast_rays(t_map *map)
 	while(i < map->plr->num_arys)
 	{
 		map->wall3d->rays_angle[i] = rayangle;
-		map->wall3d->small_distance[i] = hm_px_bw_pyr_and_wall(map, rayangle);
+		map->wall3d->x_vertical[i] = false;
+		map->wall3d->small_distance[i] = hm_px_bw_pyr_and_wall(map, rayangle, i);
 		rayangle = make_angle_postive(rayangle + (map->plr->fovue_angle / map->plr->num_arys));
 		i++;
 	} 
@@ -290,15 +293,52 @@ void	clear_windows(t_map *map)
 	}
 }
 
-void	draw_wall_3d(t_map *map, int startx, int starty, int endx, int endy)
+uint32_t get_txt_pixel_color(t_map *map, int x, int y)
+{
+	int pix;
+	int r = 0;
+	int g = 0;
+	int	b = 0;
+	int	a = 0;
+
+	if(x >= 0 && x < (int)map->txt->North->width && y >= 0 && y < (int)map->txt->North->height)
+	{
+		pix = ((y * map->txt->North->bytes_per_pixel) * map->txt->North->width + (x * map->txt->North->bytes_per_pixel));
+		r = map->txt->North->pixels[pix++];
+		g = map->txt->North->pixels[pix++];
+		b = map->txt->North->pixels[pix++];
+		a = map->txt->North->pixels[pix];
+		return (r << 24 | g << 16 | b << 8 | a);
+	}
+		return 0;
+}
+
+uint32_t get_color(t_map *map, int i, int y)
+{
+	int x;
+	double xwallhit;
+	double ywallhit;
+
+	xwallhit = map->plr->x + (map->wall3d->small_distance[i] * cos(map->wall3d->rays_angle[i]));
+	ywallhit = map->plr->y + (map->wall3d->small_distance[i] * sin(map->wall3d->rays_angle[i]));
+	if(map->wall3d->x_vertical[i] == true)
+		x = (int)ywallhit % map->size_wall_y_x;
+	else
+		x = (int)xwallhit % map->size_wall_y_x;
+	return get_txt_pixel_color(map, x, y);
+}
+
+void	draw_wall_3d(t_map *map, int startx, int starty, int endx, int endy,double wall_height)
 {
 	int tmp;
+	int color;
 	while(startx < endx)
 	{
 		tmp = starty;
 		while(tmp < endy)
 		{
-			mlx_put_pixel(map->img, startx, tmp, 0x007258);
+			color = get_color(map, startx , (tmp - starty) * (map->txt->North->height / wall_height));
+			mlx_put_pixel(map->img, startx, tmp, color);
 			tmp++;
 		}
 		startx++;
@@ -330,8 +370,7 @@ void wall_3d(t_map *map)
 		endy = (map->Ywindows_height / 2) + (wall_height / 2);
 		if(endy > map->Ywindows_height)
 			endy = map->Ywindows_height;
-		// printf("angle == %f, wall_ == %f\n", map->wall3d->small_distance[i], wall_height);
-		draw_wall_3d(map, x, y, endx, endy);
+		draw_wall_3d(map, x, y, endx, endy, wall_height);
 		i++;
 	}
 }

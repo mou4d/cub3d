@@ -32,6 +32,8 @@ typedef struct  s_wall3d
 {
 	double	*rays_angle;
 	double	*small_distance;
+	bool *x_vertical;
+	uint32_t color;
 }	t_wall3d;
 
 
@@ -50,6 +52,14 @@ typedef struct s_player
 	double num_arys;
 } t_plr;
 
+typedef struct s_textue
+{
+	mlx_texture_t	*North;
+	mlx_texture_t	*South;
+	mlx_texture_t	*East;
+	mlx_texture_t	*West;
+}t_png;
+
 
 typedef struct s_map
 {
@@ -57,6 +67,7 @@ typedef struct s_map
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	t_wall3d	*wall3d;
+	t_png		*txt;
 	int			Xwindows_width;
 	int			Ywindows_height;
 	int			size_wall_y_x;

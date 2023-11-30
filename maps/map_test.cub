@@ -1,9 +1,9 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ../wall_xpm/north.xpm
+SO ../wall_xpm/south.xpm
+WE ../wall_xpm/westGojo.xpm
+EA ../wall_xpm/east_skona.xpm
 
-F 220,100,0
+F 220,0,100
 C 225,30,0
 
 

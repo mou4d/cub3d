@@ -23,7 +23,7 @@ char **fix_map(char **map)
 		return NULL;
 	while (map[i])
 	{
-		if (ft_strnstr(map[i], "111", ft_strlen(map[i])) != NULL)
+		if (ft_strnstr(map[i], "111", ft_strlen(map[i])) != NULL && map[i][0] != 'C' && map[i][0] != 'F')
 			break ;
 		i++;
 	}
@@ -68,33 +68,49 @@ void strlen_wight_pointer(t_map *map)
 		map->width_map[i] = ft_strlen(map->map_s[i]);
 }
 
+void	info_player_helper(t_map *m)
+{
+	char postion;
+
+	postion = m->map_s[(int)m->plr->y / m->size_wall_y_x][(int)m->plr->x / m->size_wall_y_x];
+	m->plr->direction = 0;
+	m->plr->move_up_down = 0;
+	m->plr->move_right_or_left= 0;
+	m->plr->radius = m->size_wall_y_x * 0.3;
+	m->plr->speedmv = 2; //pix
+	m->plr->retactionsSpeed = 1 * (M_PI / 180);
+	m->plr->fovue_angle = 60 * (M_PI / 180);
+	m->plr->num_arys = m->Xwindows_width;
+	printf("%c\n",postion);
+	if(postion == 'E')
+		m->plr->retactionangle = (3 * M_PI) / 2;
+	else if(postion == 'W')
+		m->plr->retactionangle = M_PI / 2;
+	else if (postion == 'N')
+		m->plr->retactionangle = 0;
+	else if (postion == 'S')
+		m->plr->retactionangle = M_PI;
+}
+
 void	info_player(t_plr *p, t_map *m)
 {
 	int x;
 	int y;
 	
 	y = -1;
-	while(m->map_s[++y])
+	while (m->map_s[++y])
 	{
 		x = -1;
-		while(m->map_s[y][++x])
+		while (m->map_s[y][++x])
 		{
-			if(m->map_s[y][x] == 'N')
+			if (m->map_s[y][x] == 'E' || m->map_s[y][x] == 'W' || m->map_s[y][x] == 'N' || m->map_s[y][x] == 'S')
 			{
-				p->x = (x * m->size_wall_y_x);
-				p->y = (y * m->size_wall_y_x);
+				p->x = (x * m->size_wall_y_x) + m->size_wall_y_x / 2;
+				p->y = (y * m->size_wall_y_x) + m->size_wall_y_x / 2;
 			}
 		}
 	}
-	p->direction = 0;
-	p->move_up_down = 0;
-	p->move_right_or_left= 0;
-	p->radius = m->size_wall_y_x * 0.3;
-	p->speedmv = 3; //pix
-	p->retactionangle = M_PI / 2;
-	p->retactionsSpeed = 2 * (M_PI / 180);
-	p->fovue_angle = 60 * (M_PI / 180);
-	p->num_arys = m->Xwindows_width;
+	info_player_helper(m);
 }
 
 bool	movestp_not_into_wall(t_map *map, double movestp , double M)
@@ -170,10 +186,19 @@ void start_cub3d(t_map *map)
 	map->wall3d = malloc(sizeof(t_wall3d));
 	map->wall3d->rays_angle = (double *)malloc(sizeof(double) * map->plr->num_arys);
 	map->wall3d->small_distance = (double *)malloc(sizeof(double) * map->plr->num_arys);
+	map->wall3d->x_vertical = malloc(sizeof(bool) * map->plr->num_arys);
 	map->mlx = mlx_init(map->Xwindows_width, map->Ywindows_height,"cub3d", true);
 	map->img = mlx_new_image(map->mlx, map->Xwindows_width, map->Ywindows_height);
 	if(!map->img || mlx_image_to_window(map->mlx, map->img, 0, 0) < 0)
 		error_mlx();
+	map->txt = malloc(sizeof(t_png));
+	map->txt->North = mlx_load_png(map->NO);
+		if(!map->txt->North)
+		{
+			printf("hna nigga %d\n", map->txt->North->height);
+			printf("hna nigga %d\n", map->txt->North->width);
+			exit(2);
+		}
 	init_mlx(map);
 	mlx_loop_hook(map->mlx, update_key, map);
 	mlx_loop(map->mlx);
@@ -235,8 +260,8 @@ int main(int ac, char **av)
 	
 	if (process_map(map) != 1)
 		return (1);
-	map->map_s = fix_map(map->map_s);
 	find_tab_change_it_to_sp(map->map_s);
+	map->map_s = fix_map(map->map_s);
 	// i = 0;
 	// while(map->map_s[i])
 	// {
@@ -248,12 +273,13 @@ int main(int ac, char **av)
 	// mlx_terminate(mlx);
 	// Create and display the image.
 	// printf("#################\n");
-	// printf("NO=%d\n", map->map_fd);
+	// printf("NO=%s\n", map->NO);
 	// printf("SO=%s\n", map->SO);
 	// printf("WE=%s\n", map->WE);
 	// printf("EA=%s\n", map->EA);
 	// printf("F=%s\n", map->F);
 	// printf("C=%s\n", map->C);
+	// printf("y == %d", map->init_player_y);
 	// printf("\n#################END\n");
 	return (0);
 }
