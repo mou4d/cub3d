@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/01 05:57:57 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:47:44 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ int		check_bottom_border(t_map *map);
 int		check_side_borders (t_map *map);
 int		check_map_elements(t_map *map, char **str, char *valid_elements);
 
-
-
 // errors.c
 void	error_(char *custom_error, char *file_name);
 void	free_2d_array(char **var);
@@ -109,22 +107,21 @@ int		check_texture_file(char **type_id); //to be moved to another file later
 /*//============================exv=============================\\*/
 
 
-//casting_rays,c
+//casting_rays,c 
 double  find_y_horztouch(t_map *map, double rayangle, t_angle_facing *a_f);
 double find_x_verticletouch(t_map *map, double rayangle, t_angle_facing *a_f);
 double	hm_px_bw_pyr_and_wall(t_map *map,double rayangle, int i);
 void	cast_rays(t_map *map);
 
-//renderinng_walls.c
+//renderinng_walls.c // done
 uint32_t get_color(t_map *map, int i, int y);
-void	draw_wall_3d(t_map *map, int startx, int starty, int endx, int endy,double wall_height);
 void rendering_wall_3d(t_map *map);
 
 
 
 
 
-// // utils.c
+// // utils.c // done
 double	make_angle_postive(double angle);
 double calculate_distance(double x1, double y1, double x2, double y2);
 void	angle_facing(t_angle_facing *mongol, double rayangle);
@@ -140,7 +137,7 @@ void strlen_wight_pointer(t_map *map);
 void	info_player_helper(t_map *m);
 void	info_player(t_plr *p, t_map *m);
 
-//free.c
+//free.c // done
 void free_all(t_map *map);
 
 // get_pixel.c
@@ -149,14 +146,14 @@ uint32_t get_West_pixel_color(t_map *map, int x, int y);
 uint32_t get_south_pixel_color(t_map *map, int x, int y);
 uint32_t get_North_pixel_color(t_map *map, int x, int y);
 
-//draw.c
+//draw.c // done
 void	put_px(t_map *map, mlx_image_t *img, int x, int y, uint32_t color);
 void	draw_mini_map(t_map *map, mlx_image_t *img);
 void	draw_line_direction(t_map *map, double ray_angle, double line_px);
 void	draw_player(t_map *map, mlx_image_t *img);
-void	draw_wall_3d(t_map *map, int startx, int starty, int endx, int endy,double wall_height);
+void	draw_wall_3d(t_map *map, int startx, int starty, double wall_height);
 
-//key_mlx.c
+//key_mlx.c 
 bool	movestp_not_into_wall(t_map *map, double movestp , double M);
 void update_key(void *tmp);
 

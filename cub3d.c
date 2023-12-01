@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/01 05:51:26 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:55:05 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,6 @@ int main(int ac, char **av)
 	// printf("C=%s\n", map->C);
 	// printf("y == %d", map->init_player_y);
 	// printf("\n#################END\n");
+	// while(1);
 	return (0);
 }
