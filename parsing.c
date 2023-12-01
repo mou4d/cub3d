@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 20:57:09 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/30 19:49:03 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/01 22:19:05 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,11 @@ int	check_type_id(char	*type_id, int count)
 		||ft_strncmp(tmp[0], "WE", 3) == 0
 		|| ft_strncmp(tmp[0], "EA", 3) == 0)
 	{
-		// if (tmp[0][2] == '\0')
-		// 	ret += 1;
-		// else
-		// 	ret = 0;
 		check_texture_file(tmp);
 		ret += 1;
 	}
-	else if ((tmp[0][0] == 'F' && tmp[0][1] == '\0')
-			|| (tmp[0][0] == 'C' && tmp[0][1] == '\0'))
+	else if ((!ft_strncmp(tmp[0], "F", 2) || !ft_strncmp(tmp[0], "C", 2))
+		&& check_color_formula(tmp))
 		ret += 1;
 	else
 		ret = 0;
@@ -79,6 +75,8 @@ int	process_type_ids(t_map *map)
 	count = 0; // representing how many type id parocessed
 	while (map->map_s[i] && i < 6)
 	{
+		//removing spaces & tabs from the beginning of type ids
+		trim_type_ids(map);
 		// Checking the first char of type id && if we reached all type ids
 		if (!ft_isalpha(map->map_s[i][0]) && count <= 6) 
 			break ;
