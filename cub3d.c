@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/01 03:28:57 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/01 05:51:26 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,132 +41,6 @@ char **fix_map(char **map)
 	return (p);
 	
 }
-
-int	strlen_map_big_width_and_height(char **p, char c)
-{
-	int	i;
-	int	big_value;
-
-	i = 0;
-	big_value = 0;
-	while (p && p[i])
-	{
-		if(ft_strlen(p[i]) >= (size_t)big_value)
-			big_value = ft_strlen(p[i]);
-		i++;	
-	}
-	if(c == 'h')
-		return i;
-	return (big_value);
-}
-
-void strlen_wight_pointer(t_map *map)
-{
-	int	i;
-	i = -1;
-	while(map->map_s[++i])
-		map->width_map[i] = ft_strlen(map->map_s[i]);
-}
-
-void	info_player_helper(t_map *m)
-{
-	char postion;
-
-	postion = m->map_s[(int)m->plr->y / m->size_wall_y_x][(int)m->plr->x / m->size_wall_y_x];
-	m->plr->direction = 0;
-	m->plr->move_up_down = 0;
-	m->plr->move_right_or_left= 0;
-	m->plr->radius = m->size_wall_y_x * 0.3;
-	m->plr->speedmv = 10; //pix
-	m->plr->retactionsSpeed = 3 * (M_PI / 180);
-	m->plr->fovue_angle = 60 * (M_PI / 180);
-	m->plr->num_arys = m->Xwindows_width;
-	printf("%c\n",postion);
-	if(postion == 'E')
-		m->plr->retactionangle = (3 * M_PI) / 2;
-	else if(postion == 'W')
-		m->plr->retactionangle = M_PI / 2;
-	else if (postion == 'N')
-		m->plr->retactionangle = 0;
-	else if (postion == 'S')
-		m->plr->retactionangle = M_PI;
-}
-
-void	info_player(t_plr *p, t_map *m)
-{
-	int x;
-	int y;
-	
-	y = -1;
-	while (m->map_s[++y])
-	{
-		x = -1;
-		while (m->map_s[y][++x])
-		{
-			if (m->map_s[y][x] == 'E' || m->map_s[y][x] == 'W' || m->map_s[y][x] == 'N' || m->map_s[y][x] == 'S')
-			{
-				p->x = (x * m->size_wall_y_x) + m->size_wall_y_x / 2;
-				p->y = (y * m->size_wall_y_x) + m->size_wall_y_x / 2;
-			}
-		}
-	}
-	info_player_helper(m);
-}
-
-bool	movestp_not_into_wall(t_map *map, double movestp , double M)
-{
-	char test;
-	int x;
-	int y;
-	x = ((map->plr->x + cos(map->plr->retactionangle + M) * movestp) / map->size_wall_y_x);
-	y = ((map->plr->y + sin(map->plr->retactionangle + M) * movestp) / map->size_wall_y_x);
-	if(x < 0 || y < 0 || y > map->height_map || x > map->width_map[y])
-		return false;
-	test = map->map_s[y][x];
-	if(test == '1')
-		return false;
-	if(test == '1')
-		return false;
-	return true;
-}
-
-void update_key(void *tmp)
-{
-    double movestp;
-    t_map *map = (t_map *)tmp;
-
-  	map->plr->move_up_down = 0; 
-    map->plr->move_right_or_left = 0;
-    map->plr->direction = 0;
-    if (mlx_is_key_down(map->mlx, MLX_KEY_W) == true)
-        map->plr->move_up_down = 1;
-    else if (mlx_is_key_down(map->mlx, MLX_KEY_S) == true)
-        map->plr->move_up_down = -1;
-    if (mlx_is_key_down(map->mlx, MLX_KEY_D) == true)
-        map->plr->move_right_or_left = 1; // Move right
-    else if (mlx_is_key_down(map->mlx, MLX_KEY_A) == true)
-        map->plr->move_right_or_left = -1; // Move left
-    if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT) == true)
-        map->plr->direction = -1;
-    else if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT) == true)
-        map->plr->direction = 1;
-    map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
-    movestp = map->plr->move_up_down * map->plr->speedmv;
-    if (movestp_not_into_wall(map, movestp, 0) == true)
-    {
-        map->plr->x += cos(map->plr->retactionangle) * movestp;
-        map->plr->y += sin(map->plr->retactionangle) * movestp;
-		movestp = 0;
-    }
-    movestp  = map->plr->move_right_or_left * map->plr->speedmv;
-    if (movestp_not_into_wall(map, movestp, M_PI_2) == true)
-    {
-        map->plr->x += cos(map->plr->retactionangle + M_PI_2) * movestp;
-        map->plr->y += sin(map->plr->retactionangle + M_PI_2) * movestp;
-	}
-    init_mlx(map);
-}
-
 
 void start_cub3d(t_map *map)
 {
@@ -204,6 +78,7 @@ void start_cub3d(t_map *map)
 	init_mlx(map);
 	mlx_loop_hook(map->mlx, update_key, map);
 	mlx_loop(map->mlx);
+	free_all(map);
 }
 
 void find_tab_change_it_to_sp(char **map)

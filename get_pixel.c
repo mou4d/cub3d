@@ -6,16 +6,11 @@
 /*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 02:52:18 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/01 03:31:54 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/01 05:21:46 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// void    wall_ray_angle(t_map *map, double angle)
-// {
-//     if(angle )
-// }
 
 uint32_t get_East_pixel_color(t_map *map, int x, int y)
 {
