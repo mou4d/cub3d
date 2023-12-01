@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/30 19:45:57 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/01 22:19:14 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_map
 	char		**map_s;
 	int			init_player_x;
 	int			init_player_y;
+	int			map_idx;
 }	t_map;
 
 //parsing.c
@@ -109,5 +110,7 @@ void	draw_line_direction(t_map *map, double ray_angle, double line_px);
 void	error_(char *custom_error, char *file_name);
 void	free_2d_array(char **var);
 int		check_texture_file(char **type_id); //to be moved to another file later
+int		check_color_formula(char **color_line); // to be moved to another file later
+void	trim_type_ids(t_map *map); // to be moved to another file later
 
 #endif
