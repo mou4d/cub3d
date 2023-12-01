@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:41 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/28 19:12:31 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/01 03:53:05 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,13 +191,10 @@ double	hm_px_bw_pyr_and_wall(t_map *map,double rayangle, int i)
 	int x, y;
 	double xdistance;
 	double ydistance;
-	t_angle_facing  *a_f;
-	a_f = malloc(sizeof(t_angle_facing));
-	if(!a_f)
-		exit(33);
-	angle_facing(a_f, rayangle);
-	ydistance = find_y_horztouch(map, rayangle, a_f);
-	xdistance = find_x_verticletouch(map, rayangle, a_f);
+
+	angle_facing(map->wall3d->a_f, rayangle);
+	ydistance = find_y_horztouch(map, rayangle, map->wall3d->a_f);
+	xdistance = find_x_verticletouch(map, rayangle, map->wall3d->a_f);
 	if(ydistance < xdistance)
 	{
 		return ydistance;
@@ -293,25 +290,6 @@ void	clear_windows(t_map *map)
 	}
 }
 
-uint32_t get_txt_pixel_color(t_map *map, int x, int y)
-{
-	int pix;
-	int r = 0;
-	int g = 0;
-	int	b = 0;
-	int	a = 0;
-
-	if(x >= 0 && x < (int)map->txt->North->width && y >= 0 && y < (int)map->txt->North->height)
-	{
-		pix = ((y * map->txt->North->bytes_per_pixel) * map->txt->North->width + (x * map->txt->North->bytes_per_pixel));
-		r = map->txt->North->pixels[pix++];
-		g = map->txt->North->pixels[pix++];
-		b = map->txt->North->pixels[pix++];
-		a = map->txt->North->pixels[pix];
-		return (r << 24 | g << 16 | b << 8 | a);
-	}
-		return 0;
-}
 
 uint32_t get_color(t_map *map, int i, int y)
 {
@@ -319,25 +297,40 @@ uint32_t get_color(t_map *map, int i, int y)
 	double xwallhit;
 	double ywallhit;
 
+	angle_facing(map->wall3d->a_f, map->wall3d->rays_angle[i]);
 	xwallhit = map->plr->x + (map->wall3d->small_distance[i] * cos(map->wall3d->rays_angle[i]));
 	ywallhit = map->plr->y + (map->wall3d->small_distance[i] * sin(map->wall3d->rays_angle[i]));
 	if(map->wall3d->x_vertical[i] == true)
+	{
 		x = (int)ywallhit % map->size_wall_y_x;
+		if(map->wall3d->a_f->r_anglefacingright == true)
+			return get_south_pixel_color(map, x, y);
+		else
+			return get_North_pixel_color(map, x, y);
+	}
 	else
+	{
 		x = (int)xwallhit % map->size_wall_y_x;
-	return get_txt_pixel_color(map, x, y);
+		if(map->wall3d->a_f->r_anglefacingup == true)	
+			return get_East_pixel_color(map, x, y);
+		else
+			return get_West_pixel_color(map, x, y);
+	}
+	return 0;
 }
 
 void	draw_wall_3d(t_map *map, int startx, int starty, int endx, int endy,double wall_height)
 {
 	int tmp;
 	int color;
+	int correctdis;
 	while(startx < endx)
 	{
 		tmp = starty;
 		while(tmp < endy)
 		{
-			color = get_color(map, startx , (tmp - starty) * (map->txt->North->height / wall_height));
+			correctdis = tmp + (wall_height / 2) - (map->Ywindows_height / 2);
+			color = get_color(map, startx , correctdis * (map->txt->North->height / wall_height));
 			mlx_put_pixel(map->img, startx, tmp, color);
 			tmp++;
 		}

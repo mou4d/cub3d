@@ -1,6 +1,6 @@
 CC = cc
 FLAGS = -fsanitize=address -g #-Werror -Wextra -Wall 
-SRCS = parsing.c map.c cub3d.c utils.c
+SRCS = parsing.c map.c cub3d.c utils.c get_pixel.c
 OBJS = $(SRCS:.c=.o)
 INCLUDES = -I./lib/MLX42/include/MLX42
 LIBFT = ./lib/libft/libft.a

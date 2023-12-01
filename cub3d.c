@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/11/30 19:53:51 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/01 03:28:57 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	info_player_helper(t_map *m)
 	m->plr->move_up_down = 0;
 	m->plr->move_right_or_left= 0;
 	m->plr->radius = m->size_wall_y_x * 0.3;
-	m->plr->speedmv = 2; //pix
-	m->plr->retactionsSpeed = 1 * (M_PI / 180);
+	m->plr->speedmv = 10; //pix
+	m->plr->retactionsSpeed = 3 * (M_PI / 180);
 	m->plr->fovue_angle = 60 * (M_PI / 180);
 	m->plr->num_arys = m->Xwindows_width;
 	printf("%c\n",postion);
@@ -173,7 +173,7 @@ void start_cub3d(t_map *map)
 	int wight_big_value;
 	map->Xwindows_width = 1200;
 	map->Ywindows_height = 700;
-	map->size_wall_y_x = 64;
+	map->size_wall_y_x = 100;
 	map->plr = malloc(sizeof(t_plr));
 	if(!map->plr)
 		exit(99);
@@ -187,18 +187,20 @@ void start_cub3d(t_map *map)
 	map->wall3d->rays_angle = (double *)malloc(sizeof(double) * map->plr->num_arys);
 	map->wall3d->small_distance = (double *)malloc(sizeof(double) * map->plr->num_arys);
 	map->wall3d->x_vertical = malloc(sizeof(bool) * map->plr->num_arys);
+	map->wall3d->a_f = malloc(sizeof(t_angle_facing));
+	if(!map->wall3d->a_f)
+		exit(33);
 	map->mlx = mlx_init(map->Xwindows_width, map->Ywindows_height,"cub3d", true);
 	map->img = mlx_new_image(map->mlx, map->Xwindows_width, map->Ywindows_height);
 	if(!map->img || mlx_image_to_window(map->mlx, map->img, 0, 0) < 0)
 		error_mlx();
 	map->txt = malloc(sizeof(t_png));
+	map->txt->South = mlx_load_png(map->SO);
+	map->txt->East = mlx_load_png(map->EA);
+	map->txt->West = mlx_load_png(map->WE);
 	map->txt->North = mlx_load_png(map->NO);
-		if(!map->txt->North)
-		{
-			printf("hna nigga %d\n", map->txt->North->height);
-			printf("hna nigga %d\n", map->txt->North->width);
-			exit(2);
-		}
+	if(!map->txt->North || !map->txt->West || !map->txt->South || !map->txt->East)
+		exit(2);
 	init_mlx(map);
 	mlx_loop_hook(map->mlx, update_key, map);
 	mlx_loop(map->mlx);
@@ -247,8 +249,8 @@ int main(int ac, char **av)
 	// if (ft_strncmp(av[1], ".cub", 4) != 0)
 	// 	return (printf("Error\n"));
 	map = read_map(av[1]);
-	if (map == NULL)
-		error_("Unkown error occured check your map file.", NULL);
+	// if (map == NULL)
+		// error_("Unkown error occured check your map file.", NULL);
 	process_type_ids(map);
 	if (process_map(map) != 1)
 		return (1);
@@ -261,8 +263,8 @@ int main(int ac, char **av)
 	// 	i++;
 	// }
 	// while(1);
-	//start_cub3d(map);
-	printf("map processed correctly (y). \n");
+	start_cub3d(map);
+	// printf("map processed correctly (y). \n");
 	// mlx_terminate(mlx);
 	// Create and display the image.
 	// printf("#################\n");
