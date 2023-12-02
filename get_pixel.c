@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 02:52:18 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/01 05:21:46 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 06:33:38 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ uint32_t get_East_pixel_color(t_map *map, int x, int y)
 	int	b = 0;
 	int	a = 0;
 
-	if(x >= 0 && x < (int)map->txt->East->width && y >= 0 && y < (int)map->txt->East->height)
+	if(x >= 0 && x <= (int)map->txt->East->width && y >= 0 && y <= (int)map->txt->East->height)
 	{
 		pix = ((y * map->txt->East->bytes_per_pixel) * map->txt->East->width + (x * map->txt->East->bytes_per_pixel));
 		r = map->txt->East->pixels[pix++];
@@ -40,7 +40,7 @@ uint32_t get_West_pixel_color(t_map *map, int x, int y)
 	int	b = 0;
 	int	a = 0;
 
-	if(x >= 0 && x < (int)map->txt->West->width && y >= 0 && y < (int)map->txt->West->height)
+	if(x >= 0 && x <= (int)map->txt->West->width && y >= 0 && y <= (int)map->txt->West->height)
 	{
 		pix = ((y * map->txt->West->bytes_per_pixel) * map->txt->West->width + (x * map->txt->West->bytes_per_pixel));
 		r = map->txt->West->pixels[pix++];
@@ -60,7 +60,7 @@ uint32_t get_south_pixel_color(t_map *map, int x, int y)
 	int	b = 0;
 	int	a = 0;
 
-	if(x >= 0 && x < (int)map->txt->South->width && y >= 0 && y < (int)map->txt->South->height)
+	if(x >= 0 && x <= (int)map->txt->South->width && y >= 0 && y <= (int)map->txt->South->height)
 	{
 		pix = ((y * map->txt->South->bytes_per_pixel) * map->txt->South->width + (x * map->txt->South->bytes_per_pixel));
 		r = map->txt->South->pixels[pix++];
@@ -80,7 +80,7 @@ uint32_t get_North_pixel_color(t_map *map, int x, int y)
 	int	b = 0;
 	int	a = 0;
 
-	if(x >= 0 && x < (int)map->txt->North->width && y >= 0 && y < (int)map->txt->North->height)
+	if(x >= 0 && x <= (int)map->txt->North->width && y >= 0 && y <= (int)map->txt->North->height)
 	{
 		pix = ((y * map->txt->North->bytes_per_pixel) * map->txt->North->width + (x * map->txt->North->bytes_per_pixel));
 		r = map->txt->North->pixels[pix++];

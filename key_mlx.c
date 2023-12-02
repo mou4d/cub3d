@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:18:10 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/01 05:48:53 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 05:16:28 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,28 @@ bool	movestp_not_into_wall(t_map *map, double movestp , double M)
 	return true;
 }
 
+void    helper_update_key(t_map *map)
+{
+    double movestp;
 
+    map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
+    movestp = map->plr->move_up_down * map->plr->speedmv;
+    if (movestp_not_into_wall(map, movestp, 0) == true)
+    {
+        map->plr->x += cos(map->plr->retactionangle) * movestp;
+        map->plr->y += sin(map->plr->retactionangle) * movestp;
+		movestp = 0;
+    }
+    movestp  = map->plr->move_right_or_left * map->plr->speedmv;
+    if (movestp_not_into_wall(map, movestp, M_PI_2) == true)
+    {
+        map->plr->x += cos(map->plr->retactionangle + M_PI_2) * movestp;
+        map->plr->y += sin(map->plr->retactionangle + M_PI_2) * movestp;
+	}
+}
 
 void update_key(void *tmp)
 {
-    double movestp;
     t_map *map = (t_map *)tmp;
 
   	map->plr->move_up_down = 0; 
@@ -54,20 +71,6 @@ void update_key(void *tmp)
         map->plr->direction = 1;
     else if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE) == true)
         mlx_close_window(map->mlx);
-      
-    map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
-    movestp = map->plr->move_up_down * map->plr->speedmv;
-    if (movestp_not_into_wall(map, movestp, 0) == true)
-    {
-        map->plr->x += cos(map->plr->retactionangle) * movestp;
-        map->plr->y += sin(map->plr->retactionangle) * movestp;
-		movestp = 0;
-    }
-    movestp  = map->plr->move_right_or_left * map->plr->speedmv;
-    if (movestp_not_into_wall(map, movestp, M_PI_2) == true)
-    {
-        map->plr->x += cos(map->plr->retactionangle + M_PI_2) * movestp;
-        map->plr->y += sin(map->plr->retactionangle + M_PI_2) * movestp;
-	}
+    helper_update_key(map);   
     init_mlx(map);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/01 23:26:34 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/02 06:00:10 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,12 @@ void	trim_type_ids(t_map *map); // to be moved to another file later
 /*//============================exv=============================\\*/
 
 
-//casting_rays,c 
-double  find_y_horztouch(t_map *map, double rayangle, t_angle_facing *a_f);
-double find_x_verticletouch(t_map *map, double rayangle, t_angle_facing *a_f);
+//casting_rays,c // check done //
 double	hm_px_bw_pyr_and_wall(t_map *map,double rayangle, int i);
 void	cast_rays(t_map *map);
+//casting_rays_helper.c // done
+double  find_y_horztouch(t_map *map, double rayangle, t_angle_facing *a_f);
+double find_x_verticletouch(t_map *map, double rayangle, t_angle_facing *a_f);
 
 //renderinng_walls.c // done
 uint32_t get_color(t_map *map, int i, int y);
@@ -131,7 +132,7 @@ void	angle_facing(t_angle_facing *mongol, double rayangle);
 void	clear_windows(t_map *map);
 void	init_mlx(t_map *map);
 
-// utils_helper.c
+// utils_helper.c 
 void	error_mlx(void);
 int	strlen_map_big_width_and_height(char **p, char c);
 void strlen_wight_pointer(t_map *map);
