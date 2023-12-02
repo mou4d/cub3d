@@ -6,13 +6,13 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 03:56:50 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 23:50:34 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 23:54:28 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	put_px(t_map *map, mlx_image_t *img, int x, int y, uint32_t color)
+void	put_px(t_map *map, int x, int y, uint32_t color)
 {
 	int	tx;
 	int	ty;
@@ -24,7 +24,7 @@ void	put_px(t_map *map, mlx_image_t *img, int x, int y, uint32_t color)
 		tx = x;
 		while (tx < x + map->size_wall_y_x)
 		{
-			mlx_put_pixel(img, 0.09 * tx, 0.09 * ty, color);
+			mlx_put_pixel(map->img, 0.09 * tx, 0.09 * ty, color);
 			tx++;
 		}
 		ty++;
@@ -44,10 +44,10 @@ void	draw_mini_map(t_map *map, mlx_image_t *img)
 		while (map->map_s[y][++x])
 		{
 			if (map->map_s[y][x] == '1')
-				put_px(map, img, (x * map->size_wall_y_x),
+				put_px(map, (x * map->size_wall_y_x),
 					y * map->size_wall_y_x, 0xFF0000FF);
 			else
-				put_px(map, img, (x * map->size_wall_y_x),
+				put_px(map, (x * map->size_wall_y_x),
 					y * map->size_wall_y_x, 0x0);
 		}
 		y++;
