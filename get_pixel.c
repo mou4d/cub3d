@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 02:52:18 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 22:21:15 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 23:49:34 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ uint32_t	get_east_pixel_color(t_map *map, int x, int y)
 	g = 0;
 	b = 0;
 	a = 0;
-	if (x >= 0 && x <= (int)map->txt->East->width && y >= 0
-		&& y <= (int)map->txt->East->height)
+	if (x >= 0 && x <= (int)map->txt->east->width && y >= 0
+		&& y <= (int)map->txt->east->height)
 	{
-		pix = ((y * map->txt->East->bytes_per_pixel) * map->txt->East->width
-				+ (x * map->txt->East->bytes_per_pixel));
-		r = map->txt->East->pixels[pix++];
-		g = map->txt->East->pixels[pix++];
-		b = map->txt->East->pixels[pix++];
-		a = map->txt->East->pixels[pix];
+		pix = ((y * map->txt->east->bytes_per_pixel) * map->txt->east->width
+				+ (x * map->txt->east->bytes_per_pixel));
+		r = map->txt->east->pixels[pix++];
+		g = map->txt->east->pixels[pix++];
+		b = map->txt->east->pixels[pix++];
+		a = map->txt->east->pixels[pix];
 		return (r << 24 | g << 16 | b << 8 | a);
 	}
 	return (0);
@@ -50,15 +50,15 @@ uint32_t	get_west_pixel_color(t_map *map, int x, int y)
 	g = 0;
 	b = 0;
 	a = 0;
-	if (x >= 0 && x <= (int)map->txt->West->width
-		&& y >= 0 && y <= (int)map->txt->West->height)
+	if (x >= 0 && x <= (int)map->txt->west->width
+		&& y >= 0 && y <= (int)map->txt->west->height)
 	{
-		pix = ((y * map->txt->West->bytes_per_pixel) * map->txt->West->width
-				+ (x * map->txt->West->bytes_per_pixel));
-		r = map->txt->West->pixels[pix++];
-		g = map->txt->West->pixels[pix++];
-		b = map->txt->West->pixels[pix++];
-		a = map->txt->West->pixels[pix];
+		pix = ((y * map->txt->west->bytes_per_pixel) * map->txt->west->width
+				+ (x * map->txt->west->bytes_per_pixel));
+		r = map->txt->west->pixels[pix++];
+		g = map->txt->west->pixels[pix++];
+		b = map->txt->west->pixels[pix++];
+		a = map->txt->west->pixels[pix];
 		return (r << 24 | g << 16 | b << 8 | a);
 	}
 	return (0);
@@ -76,15 +76,15 @@ uint32_t	get_south_pixel_color(t_map *map, int x, int y)
 	g = 0;
 	b = 0;
 	a = 0;
-	if (x >= 0 && x <= (int)map->txt->South->width
-		&& y >= 0 && y <= (int)map->txt->South->height)
+	if (x >= 0 && x <= (int)map->txt->south->width
+		&& y >= 0 && y <= (int)map->txt->south->height)
 	{
-		pix = ((y * map->txt->South->bytes_per_pixel) * map->txt->South->width
-				+ (x * map->txt->South->bytes_per_pixel));
-		r = map->txt->South->pixels[pix++];
-		g = map->txt->South->pixels[pix++];
-		b = map->txt->South->pixels[pix++];
-		a = map->txt->South->pixels[pix];
+		pix = ((y * map->txt->south->bytes_per_pixel) * map->txt->south->width
+				+ (x * map->txt->south->bytes_per_pixel));
+		r = map->txt->south->pixels[pix++];
+		g = map->txt->south->pixels[pix++];
+		b = map->txt->south->pixels[pix++];
+		a = map->txt->south->pixels[pix];
 		return (r << 24 | g << 16 | b << 8 | a);
 	}
 	return (0);
@@ -102,15 +102,15 @@ uint32_t	get_north_pixel_color(t_map *map, int x, int y)
 	g = 0;
 	b = 0;
 	a = 0;
-	if (x >= 0 && x <= (int)map->txt->North->width
-		&& y >= 0 && y <= (int)map->txt->North->height)
+	if (x >= 0 && x <= (int)map->txt->north->width
+		&& y >= 0 && y <= (int)map->txt->north->height)
 	{
-		pix = ((y * map->txt->North->bytes_per_pixel) * map->txt->North->width
-				+ (x * map->txt->North->bytes_per_pixel));
-		r = map->txt->North->pixels[pix++];
-		g = map->txt->North->pixels[pix++];
-		b = map->txt->North->pixels[pix++];
-		a = map->txt->North->pixels[pix];
+		pix = ((y * map->txt->north->bytes_per_pixel) * map->txt->north->width
+				+ (x * map->txt->north->bytes_per_pixel));
+		r = map->txt->north->pixels[pix++];
+		g = map->txt->north->pixels[pix++];
+		b = map->txt->north->pixels[pix++];
+		a = map->txt->north->pixels[pix];
 		return (r << 24 | g << 16 | b << 8 | a);
 	}
 	return (0);

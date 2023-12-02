@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:10:05 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 22:21:15 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 23:50:34 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	rendering_wall_3d(t_map *map)
 	double	distance_proje_plan;
 
 	i = ((x = 0), 0);
-	distance_proje_plan = (map->Xwindows_width / 2)
+	distance_proje_plan = (map->xwindows_width / 2)
 		/ tan(map->plr->fovue_angle / 2);
 	while (i < map->plr->num_arys)
 	{
@@ -58,7 +58,7 @@ void	rendering_wall_3d(t_map *map)
 			* cos(map->wall3d->rays_angle[i] - map->plr->retactionangle);
 		wall_height = (map->size_wall_y_x / correct_distance_or_y)
 			* (distance_proje_plan);
-		correct_distance_or_y = (map->Ywindows_height / 2) - (wall_height / 2);
+		correct_distance_or_y = (map->ywindows_height / 2) - (wall_height / 2);
 		x = i;
 		if (correct_distance_or_y < 0)
 			correct_distance_or_y = 0;

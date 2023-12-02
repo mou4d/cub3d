@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 03:56:50 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 06:22:04 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 23:50:34 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,19 +102,19 @@ void	draw_wall_3d(t_map *map, int startx, int starty, double wall_height)
 	int	endx;
 
 	endx = startx + 1;
-	if (endx > map->Xwindows_width)
-		endx = map->Xwindows_width;
-	endy = (map->Ywindows_height / 2) + (wall_height / 2);
-	if (endy > map->Ywindows_height)
-		endy = map->Ywindows_height;
+	if (endx > map->xwindows_width)
+		endx = map->xwindows_width;
+	endy = (map->ywindows_height / 2) + (wall_height / 2);
+	if (endy > map->ywindows_height)
+		endy = map->ywindows_height;
 	while (startx < endx)
 	{
 		tmp = starty;
 		while (tmp < endy)
 		{
-			correctdis = tmp + (wall_height / 2) - (map->Ywindows_height / 2);
+			correctdis = tmp + (wall_height / 2) - (map->ywindows_height / 2);
 			color = get_color(map, startx,
-					correctdis * (map->txt->North->height / wall_height));
+					correctdis * (map->txt->north->height / wall_height));
 			mlx_put_pixel(map->img, startx, tmp, color);
 			tmp++;
 		}

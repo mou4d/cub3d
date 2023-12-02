@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 05:11:17 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/01 19:01:55 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 23:49:34 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	free_all(t_map *map)
 	mlx_terminate(map->mlx);
 	mlx_close_hook(map->mlx, update_key, map);
 	mlx_delete_image(map->mlx, map->img);
-	mlx_delete_texture(map->txt->East);
-	mlx_delete_texture(map->txt->West);
-	mlx_delete_texture(map->txt->North);
-	mlx_delete_texture(map->txt->South);
+	mlx_delete_texture(map->txt->east);
+	mlx_delete_texture(map->txt->west);
+	mlx_delete_texture(map->txt->north);
+	mlx_delete_texture(map->txt->south);
 	free(map->txt);
 	free(map->plr);
 	free(map->wall3d->a_f);

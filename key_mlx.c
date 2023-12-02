@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:18:10 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 22:28:46 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 23:11:03 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	helper_update_key(t_map *map)
 {
 	double	movestp;
 
-	map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
+	map->plr->retactionangle += map->plr->direction * map->plr->retactionsspeed;
 	movestp = map->plr->move_up_down * map->plr->speedmv;
 	if (movestp_not_into_wall(map, movestp, 0) == true)
 	{

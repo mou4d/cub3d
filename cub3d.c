@@ -6,7 +6,7 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/02 23:04:59 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 23:50:34 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	start_cub3d(t_map *map)
 {
 	int	wight_big_value;
 
-	map->Xwindows_width = 1200;
-	map->Ywindows_height = 700;
+	map->xwindows_width = 1200;
+	map->ywindows_height = 700;
 	map->size_wall_y_x = 100;
 	map->plr = malloc(sizeof(t_plr));
 	if (!map->plr)
@@ -71,19 +71,19 @@ void	start_cub3d(t_map *map)
 
 void	helper_start_cub3d(t_map *map)
 {
-	map->mlx = mlx_init(map->Xwindows_width,
-			map->Ywindows_height,"cub3d", true);
+	map->mlx = mlx_init(map->xwindows_width,
+			map->ywindows_height,"cub3d", true);
 	map->img = mlx_new_image(map->mlx,
-			map->Xwindows_width, map->Ywindows_height);
+			map->xwindows_width, map->ywindows_height);
 	if (!map->img || mlx_image_to_window(map->mlx, map->img, 0, 0) < 0)
 		error_mlx();
 	map->txt = malloc(sizeof(t_png));
-	map->txt->South = mlx_load_png(map->SO);
-	map->txt->East = mlx_load_png(map->EA);
-	map->txt->West = mlx_load_png(map->WE);
-	map->txt->North = mlx_load_png(map->NO);
-	if (!map->txt->North || !map->txt->West
-		|| !map->txt->South || !map->txt->East)
+	map->txt->south = mlx_load_png(map->SO);
+	map->txt->east = mlx_load_png(map->EA);
+	map->txt->west = mlx_load_png(map->WE);
+	map->txt->north = mlx_load_png(map->NO);
+	if (!map->txt->north || !map->txt->west
+		|| !map->txt->south || !map->txt->east)
 		exit(2);
 	init_mlx(map);
 	mlx_loop_hook(map->mlx, update_key, map);

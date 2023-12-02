@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:41 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/02 06:00:25 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 23:50:34 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ void	clear_windows(t_map *map)
 	color2 = ((ft_atoi(map->F) << 16)
 			| (ft_atoi(ft_strchr(map->F, ',') + 1) << 8)
 			| ft_atoi(1 + ft_strrchr((1 + ft_strchr(map->F, ',')), ',')));
-	while (x < map->Xwindows_width)
+	while (x < map->xwindows_width)
 	{
 		color = ((y = 0), color1);
-		while (y < map->Ywindows_height)
+		while (y < map->ywindows_height)
 		{
-			if (y > map->Ywindows_height / 2)
+			if (y > map->ywindows_height / 2)
 				color = color2;
 			mlx_put_pixel(map->img, x, y, color);
 			y++;
