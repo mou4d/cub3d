@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   casting_rays.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:09:51 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 07:01:01 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:09:32 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double	hm_px_bw_pyr_and_wall(t_map *map,double rayangle, int i)
+double	hm_px_bw_pyr_and_wall(t_map *map, double rayangle, int i)
 {
 	float	xdistance;
 	float	ydistance;

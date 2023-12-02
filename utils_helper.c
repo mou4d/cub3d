@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:20:26 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/01 04:43:21 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:30:09 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,20 @@ int	strlen_map_big_width_and_height(char **p, char c)
 	big_value = 0;
 	while (p && p[i])
 	{
-		if(ft_strlen(p[i]) >= (size_t)big_value)
+		if (ft_strlen(p[i]) >= (size_t)big_value)
 			big_value = ft_strlen(p[i]);
-		i++;	
+		i++;
 	}
-	if(c == 'h')
-		return i;
+	if (c == 'h')
+		return (i);
 	return (big_value);
 }
 
-void strlen_wight_pointer(t_map *map)
+void	strlen_wight_pointer(t_map *map)
 {
 	int	i;
+
 	i = -1;
-	while(map->map_s[++i])
+	while (map->map_s[++i])
 		map->width_map[i] = ft_strlen(map->map_s[i]);
 }
-

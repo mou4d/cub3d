@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering_walls.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:10:05 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 06:31:02 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:21:15 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ uint32_t	get_color(t_map *map, int i, int y)
 		if (map->wall3d->a_f->r_anglefacingright == true)
 			return (get_south_pixel_color(map, i, y));
 		else
-			return (get_North_pixel_color(map, i, y));
+			return (get_north_pixel_color(map, i, y));
 	}
 	else
 	{
 		i = (int)xwallhit % map->size_wall_y_x;
 		if (map->wall3d->a_f->r_anglefacingup == true)
-			return (get_East_pixel_color(map, i, y));
+			return (get_east_pixel_color(map, i, y));
 		else
-			return (get_West_pixel_color(map, i, y));
+			return (get_west_pixel_color(map, i, y));
 	}
 	return (0);
 }

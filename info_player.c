@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   info_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:09:56 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/01 04:45:37 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:24:18 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 void	info_player_helper(t_map *m)
 {
-	char postion;
+	char	postion;
 
-	postion = m->map_s[(int)m->plr->y / m->size_wall_y_x][(int)m->plr->x / m->size_wall_y_x];
+	postion = m->map_s[(int)m->plr->y
+		/ m->size_wall_y_x][(int)m->plr->x / m->size_wall_y_x];
 	m->plr->direction = 0;
 	m->plr->move_up_down = 0;
-	m->plr->move_right_or_left= 0;
+	m->plr->move_right_or_left = 0;
 	m->plr->radius = m->size_wall_y_x * 0.3;
-	m->plr->speedmv = 10; //pix
+	m->plr->speedmv = 10;
 	m->plr->retactionsSpeed = 3 * (M_PI / 180);
 	m->plr->fovue_angle = 60 * (M_PI / 180);
 	m->plr->num_arys = m->Xwindows_width;
@@ -37,16 +38,17 @@ void	info_player_helper(t_map *m)
 
 void	info_player(t_plr *p, t_map *m)
 {
-	int x;
-	int y;
-	
+	int	x;
+	int	y;
+
 	y = -1;
 	while (m->map_s[++y])
 	{
 		x = -1;
 		while (m->map_s[y][++x])
 		{
-			if (m->map_s[y][x] == 'E' || m->map_s[y][x] == 'W' || m->map_s[y][x] == 'N' || m->map_s[y][x] == 'S')
+			if (m->map_s[y][x] == 'E' || m->map_s[y][x] == 'W'
+					|| m->map_s[y][x] == 'N' || m->map_s[y][x] == 'S')
 			{
 				p->x = (x * m->size_wall_y_x) + m->size_wall_y_x / 2;
 				p->y = (y * m->size_wall_y_x) + m->size_wall_y_x / 2;

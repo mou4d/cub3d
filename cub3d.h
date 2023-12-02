@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/02 06:00:10 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:21:15 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,10 @@ void	info_player(t_plr *p, t_map *m);
 void free_all(t_map *map);
 
 // get_pixel.c
-uint32_t get_East_pixel_color(t_map *map, int x, int y);
-uint32_t get_West_pixel_color(t_map *map, int x, int y);
+uint32_t get_east_pixel_color(t_map *map, int x, int y);
+uint32_t get_west_pixel_color(t_map *map, int x, int y);
 uint32_t get_south_pixel_color(t_map *map, int x, int y);
-uint32_t get_North_pixel_color(t_map *map, int x, int y);
+uint32_t get_north_pixel_color(t_map *map, int x, int y);
 
 //draw.c // done
 void	put_px(t_map *map, mlx_image_t *img, int x, int y, uint32_t color);

@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/02 06:35:41 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:13:02 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char **fix_map(char **map)
+char	**fix_map(char **map)
 {
 	char	**p;
 	int		i;
 	int		tmp;
 
-	i = ((tmp = 0) ,0);
-	if(!map)
-		return NULL;
+	i = ((tmp = 0), 0);
+	if (!map)
+		return (NULL);
 	while (map[i])
 	{
-		if (ft_strnstr(map[i], "111", ft_strlen(map[i])) != NULL && map[i][0] != 'C' && map[i][0] != 'F')
+		if (ft_strnstr(map[i], "111", ft_strlen(map[i])) != NULL
+			&& map[i][0] != 'C' && map[i][0] != 'F')
 			break ;
 		i++;
 	}
@@ -32,19 +33,18 @@ char **fix_map(char **map)
 	p = (char **)malloc((sizeof(char *)) * (tmp + 1));
 	tmp = ((i--), 0);
 	while (map[++i])
-		p[tmp++] = ft_substr(map[i],0 , ft_strlen(map[i]));
-	p[tmp] = 0;
-	tmp = 0;
+		p[tmp++] = ft_substr(map[i], 0, ft_strlen(map[i]));
+	tmp = ((p[tmp] = 0), 0);
 	while (map[tmp])
 		free(map[tmp++]);
 	free(map);
 	return (p);
-	
 }
 
-void start_cub3d(t_map *map)
+void	start_cub3d(t_map *map)
 {
-	int wight_big_value;
+	int	wight_big_value;
+	
 	map->Xwindows_width = 1200;
 	map->Ywindows_height = 700;
 	map->size_wall_y_x = 100;

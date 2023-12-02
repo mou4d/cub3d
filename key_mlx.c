@@ -3,74 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   key_mlx.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:18:10 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 05:16:28 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:28:46 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "cub3d.h"
 
-bool	movestp_not_into_wall(t_map *map, double movestp , double M)
+bool	movestp_not_into_wall(t_map *map, double movestp, double M)
 {
-	char test;
-	int x;
-	int y;
-	x = ((map->plr->x + cos(map->plr->retactionangle + M) * movestp) / map->size_wall_y_x);
-	y = ((map->plr->y + sin(map->plr->retactionangle + M) * movestp) / map->size_wall_y_x);
-	if(x < 0 || y < 0 || y > map->height_map || x > map->width_map[y])
-		return false;
+	char	test;
+	int		x;
+	int		y;
+
+	x = ((map->plr->x + cos(map->plr->retactionangle + M) * movestp)
+			/ map->size_wall_y_x);
+	y = ((map->plr->y + sin(map->plr->retactionangle + M) * movestp)
+			/ map->size_wall_y_x);
+	if (x < 0 || y < 0 || y > map->height_map || x > map->width_map[y])
+		return (false);
 	test = map->map_s[y][x];
-	if(test == '1')
-		return false;
-	if(test == '1')
-		return false;
-	return true;
+	if (test == '1')
+		return (false);
+	if (test == '1')
+		return (false);
+	return (true);
 }
 
-void    helper_update_key(t_map *map)
+void	helper_update_key(t_map *map)
 {
-    double movestp;
+	double	movestp;
 
-    map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
-    movestp = map->plr->move_up_down * map->plr->speedmv;
-    if (movestp_not_into_wall(map, movestp, 0) == true)
-    {
-        map->plr->x += cos(map->plr->retactionangle) * movestp;
-        map->plr->y += sin(map->plr->retactionangle) * movestp;
+	map->plr->retactionangle += map->plr->direction * map->plr->retactionsSpeed;
+	movestp = map->plr->move_up_down * map->plr->speedmv;
+	if (movestp_not_into_wall(map, movestp, 0) == true)
+	{
+		map->plr->x += cos(map->plr->retactionangle) * movestp;
+		map->plr->y += sin(map->plr->retactionangle) * movestp;
 		movestp = 0;
-    }
-    movestp  = map->plr->move_right_or_left * map->plr->speedmv;
-    if (movestp_not_into_wall(map, movestp, M_PI_2) == true)
-    {
-        map->plr->x += cos(map->plr->retactionangle + M_PI_2) * movestp;
-        map->plr->y += sin(map->plr->retactionangle + M_PI_2) * movestp;
+	}
+	movestp = map->plr->move_right_or_left * map->plr->speedmv;
+	if (movestp_not_into_wall(map, movestp, M_PI_2) == true)
+	{
+		map->plr->x += cos(map->plr->retactionangle + M_PI_2) * movestp;
+		map->plr->y += sin(map->plr->retactionangle + M_PI_2) * movestp;
 	}
 }
 
-void update_key(void *tmp)
+void	update_key(void *tmp)
 {
-    t_map *map = (t_map *)tmp;
+	t_map	*map;
 
-  	map->plr->move_up_down = 0; 
-    map->plr->move_right_or_left = 0;
-    map->plr->direction = 0;
-    if (mlx_is_key_down(map->mlx, MLX_KEY_W) == true)
-        map->plr->move_up_down = 1;
-    else if (mlx_is_key_down(map->mlx, MLX_KEY_S) == true)
-        map->plr->move_up_down = -1;
-    if (mlx_is_key_down(map->mlx, MLX_KEY_D) == true)
-        map->plr->move_right_or_left = 1; // Move right
-    else if (mlx_is_key_down(map->mlx, MLX_KEY_A) == true)
-        map->plr->move_right_or_left = -1; // Move left
-    if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT) == true)
-        map->plr->direction = -1;
-    else if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT) == true)
-        map->plr->direction = 1;
-    else if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE) == true)
-        mlx_close_window(map->mlx);
-    helper_update_key(map);   
-    init_mlx(map);
+	map = (t_map *)tmp;
+	map->plr->move_up_down = 0; 
+	map->plr->move_right_or_left = 0;
+	map->plr->direction = 0;
+	if (mlx_is_key_down(map->mlx, MLX_KEY_W) == true)
+		map->plr->move_up_down = 1;
+	else if (mlx_is_key_down(map->mlx, MLX_KEY_S) == true)
+		map->plr->move_up_down = -1;
+	if (mlx_is_key_down(map->mlx, MLX_KEY_D) == true)
+		map->plr->move_right_or_left = 1;
+	else if (mlx_is_key_down(map->mlx, MLX_KEY_A) == true)
+		map->plr->move_right_or_left = -1;
+	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT) == true)
+		map->plr->direction = -1;
+	else if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT) == true)
+		map->plr->direction = 1;
+	else if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE) == true)
+		mlx_close_window(map->mlx);
+	helper_update_key(map);
+	init_mlx(map);
 }
