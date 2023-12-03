@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/02 23:51:34 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/03 23:24:48 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ uint32_t	get_south_pixel_color(t_map *map, int x, int y);
 uint32_t	get_north_pixel_color(t_map *map, int x, int y);
 
 //draw.c // done
-void	put_px(t_map *map, mlx_image_t *img, int x, int y, uint32_t color);
+void	put_px(t_map *map, int x, int y, uint32_t color);
 void	draw_mini_map(t_map *map, mlx_image_t *img);
 void	draw_line_direction(t_map *map, double ray_angle, double line_px);
 void	draw_player(t_map *map, mlx_image_t *img);

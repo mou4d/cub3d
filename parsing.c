@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 20:57:09 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/03 18:24:01 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/03 23:24:58 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,73 +118,59 @@ t_map	*read_map(char *file)
 		return (NULL);
 	ret->map_fd = fd;
 	ret->map_s = ft_split(buff, '\n');
-	ret->map_s_copy = ft_split(buff, '\n');
 	ret->init_player_x = -1;
 	ret->init_player_y = -1;
 	return (ret);
 }
 
-void	adapt_lines(char **map)
+int	check_line(char **map, char *line, int c)
 {
-	int		curr_l_len;
-	int		n_len;
-	int		i, j;
-	char	*tmp;
+	int	i;
 
-	i = 6;
-	while (map[i])
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	while (line[i] && line[i] == '1')
+		i++;
+	if (!line[i])
+		return (1);
+	while (line[i])
 	{
-		curr_l_len = ft_strlen(map[i]);
-		if (map[i + 1])
+		if (ft_strchr("0NSWE", line[i]))
 		{
-			n_len = ft_strlen(map[i + 1]);
-			if (curr_l_len > n_len)
-			{
-				
-				tmp = ft_strdup(map[i + 1]);
-				free(map[i + 1]);
-				map[i + 1] = malloc(sizeof(char) * (curr_l_len + 1));
-				ft_memset(map[i + 1], 'V', curr_l_len);
-				j = -1;
-				while (tmp[++j])
-				{
-					map[i + 1][j] = tmp[j];
-				}
-			}
+			//if 0 in the 1st line or the 1st of a line or at the last
+			if (i == 0 || c == 6 || !map[c][i + 1])
+				return (0);
+			//if 0 is the 1st after space or before
+			if (map[c][i - 1] == ' ' || ft_strchr("10NSWE", map[c][i + 1]) == NULL)
+				return (0);
+			//if 0 is last and nothing above
+			if (!map[c - 1][i] || (map[c - 1]
+				&& ft_strchr("10NESW", map[c - 1][i]) == NULL))
+				return (0);
+			//check if no space or emty below a 0
+			if (map[c + 1] && ft_strchr("10NSWE", map[c + 1][i]) == NULL)
+				return (0);
+			if (!map[c + 1])
+				return (0);
 		}
 		i++;
 	}
+	return (1);
 }
 
-void	fill_map(char **map)
+void	check_walls(char **map)
 {
 	int	i;
 	int	j;
 
-	i = 5;
-	while (map[++i])
+	i = 6;
+	while (map[i])
 	{
-		j = 0;
-		while (map[i][j] && map[i][j] == ' ')
-			j++;
-		while (map[i][j] && map[i][j] == '1')
-			j++;
-		if (map[i][j] == '0')
-		{
-			while (map[i][j])
-			{
-				if ((map[i][j] == '0' || ft_strchr("NSWE", map[i][j]))
-					&& map[i][j + 1])
-				{
-					if ((map[i][j - 1] && map[i][j - 1] == '1')
-						&& (map[i - 1][j] && map[i - 1][j] == '1')
-						&& (map[i + 1] && map[i + 1][j] != 'V')
-						&& (map[i] [j + 1] && map[i][j + 1] != 'V'))
-						map[i][j] = '1';
-				}
-				j++;
-			}
-		}
+		printf("line %d\n", i);
+		if (!check_line(map, map[i], i))
+			error_("map not closed correctly (check_walls())", NULL);
+		i++;
 	}
 }
 
@@ -199,23 +185,21 @@ int	process_map(t_map *map)
 	// ret = check_bottom_border(map);
 	// ret = check_side_borders(map);
 	/// Temporary 
-	adapt_lines(map->map_s_copy);
-	fill_map(map->map_s_copy);
+	check_walls(map->map_s);
 	ret  = 5;
-	
-	while (map->map_s_copy[++ret])
-		printf("%s\n", map->map_s_copy[ret]);
-	ret = 6;
-	while (map->map_s_copy[ret])
-	{
-		while (*(map->map_s_copy[ret]))
-		{
-			if (*(map->map_s_copy[ret]) == '0')
-				error_("Map not closed :(", NULL);
-			(map->map_s_copy[ret])++;
-		}
-		ret++;
-	}
+	while (map->map_s[++ret])
+		printf("%s\n", map->map_s[ret]);
+	// ret = 6;
+	// while (map->map_s_copy[ret])
+	// {
+	// 	while (*(map->map_s_copy[ret]))
+	// 	{
+	// 		if (*(map->map_s_copy[ret]) == '0')
+	// 			error_("Map not closed :(", NULL);
+	// 		(map->map_s_copy[ret])++;
+	// 	}
+	// 	ret++;
+	// }
 	printf("\nmap closed (y)\n");
 	exit(0);
 	/// ##############
