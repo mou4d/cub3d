@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 20:57:09 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/01 22:19:05 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/03 18:24:01 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,74 @@ t_map	*read_map(char *file)
 		return (NULL);
 	ret->map_fd = fd;
 	ret->map_s = ft_split(buff, '\n');
+	ret->map_s_copy = ft_split(buff, '\n');
 	ret->init_player_x = -1;
 	ret->init_player_y = -1;
 	return (ret);
+}
+
+void	adapt_lines(char **map)
+{
+	int		curr_l_len;
+	int		n_len;
+	int		i, j;
+	char	*tmp;
+
+	i = 6;
+	while (map[i])
+	{
+		curr_l_len = ft_strlen(map[i]);
+		if (map[i + 1])
+		{
+			n_len = ft_strlen(map[i + 1]);
+			if (curr_l_len > n_len)
+			{
+				
+				tmp = ft_strdup(map[i + 1]);
+				free(map[i + 1]);
+				map[i + 1] = malloc(sizeof(char) * (curr_l_len + 1));
+				ft_memset(map[i + 1], 'V', curr_l_len);
+				j = -1;
+				while (tmp[++j])
+				{
+					map[i + 1][j] = tmp[j];
+				}
+			}
+		}
+		i++;
+	}
+}
+
+void	fill_map(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 5;
+	while (map[++i])
+	{
+		j = 0;
+		while (map[i][j] && map[i][j] == ' ')
+			j++;
+		while (map[i][j] && map[i][j] == '1')
+			j++;
+		if (map[i][j] == '0')
+		{
+			while (map[i][j])
+			{
+				if ((map[i][j] == '0' || ft_strchr("NSWE", map[i][j]))
+					&& map[i][j + 1])
+				{
+					if ((map[i][j - 1] && map[i][j - 1] == '1')
+						&& (map[i - 1][j] && map[i - 1][j] == '1')
+						&& (map[i + 1] && map[i + 1][j] != 'V')
+						&& (map[i] [j + 1] && map[i][j + 1] != 'V'))
+						map[i][j] = '1';
+				}
+				j++;
+			}
+		}
+	}
 }
 
 int	process_map(t_map *map)
@@ -130,9 +195,30 @@ int	process_map(t_map *map)
 	ret = 0;
 	if (check_map_elements(map, map->map_s, "NSEW01 	") != 1)
 		return (printf("Map elements not valid\n"));
-	ret = check_top_border(map);
-	ret = check_bottom_border(map);
-	ret = check_side_borders(map);
+	// ret = check_top_border(map);
+	// ret = check_bottom_border(map);
+	// ret = check_side_borders(map);
+	/// Temporary 
+	adapt_lines(map->map_s_copy);
+	fill_map(map->map_s_copy);
+	ret  = 5;
+	
+	while (map->map_s_copy[++ret])
+		printf("%s\n", map->map_s_copy[ret]);
+	ret = 6;
+	while (map->map_s_copy[ret])
+	{
+		while (*(map->map_s_copy[ret]))
+		{
+			if (*(map->map_s_copy[ret]) == '0')
+				error_("Map not closed :(", NULL);
+			(map->map_s_copy[ret])++;
+		}
+		ret++;
+	}
+	printf("\nmap closed (y)\n");
+	exit(0);
+	/// ##############
 	if (!ret)
 		return (printf("Map not closed properly\n"));
 	return (ret);
