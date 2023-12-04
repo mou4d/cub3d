@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:41 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/02 23:50:34 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:03:50 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,14 @@ void	clear_windows(t_map *map)
 	uint32_t	color2;
 
 	x = 0;
-	color1 = ((ft_atoi(map->C) << 16)
-			| (ft_atoi(ft_strchr(map->C, ',') + 1) << 8)
-			| (ft_atoi(1 + ft_strrchr((1 + ft_strchr(map->C, ',')), ','))));
-	color2 = ((ft_atoi(map->F) << 16)
-			| (ft_atoi(ft_strchr(map->F, ',') + 1) << 8)
-			| ft_atoi(1 + ft_strrchr((1 + ft_strchr(map->F, ',')), ',')));
+	color1 = (ft_atoi(map->C) << 24
+			| (ft_atoi(ft_strchr(map->C, ',') + 1) << 16)
+			| (ft_atoi(1 + ft_strrchr((1 + ft_strchr(map->C, ',')), ',')) << 8)
+			| (255));
+	color2 = ((ft_atoi(map->F) << 24)
+			| (ft_atoi(ft_strchr(map->F, ',') + 1) << 16)
+			| ft_atoi(1 + ft_strrchr((1 + ft_strchr(map->F, ',')), ',')) << 8
+			| (255));
 	while (x < map->xwindows_width)
 	{
 		color = ((y = 0), color1);
@@ -86,7 +88,7 @@ void	init_mlx(t_map *map)
 	cast_rays(map);
 	clear_windows(map);
 	rendering_wall_3d(map);
-	draw_mini_map(map, map->img);
+	draw_mini_map(map);
 	draw_player(map, map->img);
 	while (i < map->plr->num_arys)
 	{

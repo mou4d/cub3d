@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:39:08 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/01 23:06:43 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:01:35 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,36 +47,21 @@ void	free_2d_array(char **var)
 	free(var);
 }
 
-// to be moved later 
-int	check_texture_file(char **type_id)
-{
-	int	fd;
-	int	i;
-
-	i = 0;
-	while (type_id[i])
-		i++;
-	if (i > 2 || ft_strchr(type_id[1], '\t') != NULL)
-		error_("Texture not valid, check if you have any extra tabs", NULL);
-	if (type_id[1] && ft_strncmp(strrchr(type_id[1], '.'), ".png", 5) != 0)
-		error_("Not a valid file", type_id[1]);
-	fd = open(type_id[1], O_RDONLY);
-	if (fd < 3)
-	{
-		if (!type_id[1])
-			error_("No texture file specified", type_id[0]);
-		error_(NULL, type_id[1]);
-	}
-	close(fd);
-	return (1);
-}
-
 void	check_color_range(char *color)
 {
 	char	**tmp;
 	int		i;
 
 	tmp = ft_split(color, ',');
+	i = 0;
+	while (color[i])
+		i++;
+	if (i < 3)
+	{
+		if (tmp != NULL)
+			free_2d_array(tmp);
+		error_("Color not in correct format", NULL);
+	}
 	i = -1;
 	while (tmp[++i])
 	{
@@ -97,7 +82,7 @@ int	check_color_formula(char **color_line)
 	i = 0;
 	while (color_line[i])
 		i++;
-	if (i > 2 || ft_strchr(color_line[1], '\t') != NULL)
+	if (i < 2 || i > 2 || ft_strchr(color_line[1], '\t') != NULL)
 		error_("Color is not in valid, check if you have any extra tab", NULL);
 	i = 0;
 	color = color_line[1];
@@ -114,7 +99,6 @@ int	check_color_formula(char **color_line)
 	check_color_range(color);
 	return (1);
 }
-
 
 void	trim_type_ids(t_map *map)
 {

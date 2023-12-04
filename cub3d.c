@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/02 23:50:34 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:03:09 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,7 @@ char	**fix_map(char **map)
 	i = ((tmp = 0), 0);
 	if (!map)
 		return (NULL);
-	while (map[i])
-	{
-		if (ft_strnstr(map[i], "111", ft_strlen(map[i])) != NULL
-			&& map[i][0] != 'C' && map[i][0] != 'F')
-			break ;
-		i++;
-	}
+	i = 6;
 	while (map[i + tmp])
 		tmp++;
 	p = (char **)malloc((sizeof(char *)) * (tmp + 1));
@@ -56,7 +50,6 @@ void	start_cub3d(t_map *map)
 	map->height_map = strlen_map_big_width_and_height(map->map_s, 'h');
 	map->width_map = malloc(map->height_map * sizeof(int));
 	strlen_wight_pointer(map);
-	printf("w = %d, h = %d\n", wight_big_value, map->height_map);
 	map->wall3d = malloc(sizeof(t_wall3d));
 	map->wall3d->rays_angle = (double *)malloc(sizeof(double)
 			* map->plr->num_arys);
@@ -72,7 +65,7 @@ void	start_cub3d(t_map *map)
 void	helper_start_cub3d(t_map *map)
 {
 	map->mlx = mlx_init(map->xwindows_width,
-			map->ywindows_height,"cub3d", true);
+			map->ywindows_height, "cub3d", true);
 	map->img = mlx_new_image(map->mlx,
 			map->xwindows_width, map->ywindows_height);
 	if (!map->img || mlx_image_to_window(map->mlx, map->img, 0, 0) < 0)
@@ -88,7 +81,6 @@ void	helper_start_cub3d(t_map *map)
 	init_mlx(map);
 	mlx_loop_hook(map->mlx, update_key, map);
 	mlx_loop(map->mlx);
-	free_all(map);
 }
 
 void	find_tab_change_it_to_sp(char **map)
@@ -123,12 +115,9 @@ void	find_tab_change_it_to_sp(char **map)
 int	main(int ac, char **av)
 {
 	t_map	*map;
-	int		i;
 
 	if (ac < 2)
 		return (printf("Error\n"));
-	// if (ft_strncmp(av[1], ".cub", 4) != 0)
-	// 	return (printf("Error\n"));
 	map = read_map(av[1]);
 	if (map == NULL)
 		error_("Unkown error occured check your map file.", NULL);

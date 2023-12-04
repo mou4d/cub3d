@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 00:28:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2022/11/01 05:07:30 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:05:33 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_calloc(size_t count, size_t size)
 	void	*ret;
 
 	if (size == 0 && count == 0)
-	{	
+	{
 		size = 1;
 		count = 1;
 	}

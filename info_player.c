@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   info_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:09:56 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 23:50:23 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:11:48 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	info_player_helper(t_map *m)
 	m->plr->move_right_or_left = 0;
 	m->plr->radius = m->size_wall_y_x * 0.3;
 	m->plr->speedmv = 10;
-	m->plr->retactionsspeed = 3 * (M_PI / 180);
+	m->plr->retactionsspeed = 5 * (M_PI / 180);
 	m->plr->fovue_angle = 60 * (M_PI / 180);
 	m->plr->num_arys = m->xwindows_width;
 	if (postion == 'E')

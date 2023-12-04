@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 01:11:41 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/09/08 18:00:09 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:05:22 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	i;
 
-	// if (len < 0)
-	// 	return (NULL);
 	if (*needle == '\0')
 		return ((char *)haystack);
 	while ((len > 0) && *haystack)

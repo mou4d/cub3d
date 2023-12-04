@@ -6,9 +6,10 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/03 23:24:48 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:30:38 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -20,6 +21,8 @@
 # include <errno.h>
 # include "./lib/libft/libft.h"
 # include "./lib/MLX42/include/MLX42/MLX42.h"
+# define MINI_MAP 0.09
+
 
 typedef struct s_angle
 {
@@ -91,17 +94,15 @@ t_map	*read_map(char *file);
 int		process_type_ids(t_map *map);
 void	init_type_ids(t_map *map, char *type);
 int		process_map(t_map *map);
+int		check_line(char **map, char *line, int c);
 
 // map.c
-int		check_top_border(t_map *map);
-int		check_bottom_border(t_map *map);
-int		check_side_borders(t_map *map);
 int		check_map_elements(t_map *map, char **str, char *valid_elements);
+int		check_texture_file(char **type_id);
 
 // errors.c
 void	error_(char *custom_error, char *file_name);
 void	free_2d_array(char **var);
-int		check_texture_file(char **type_id);
 int		check_color_formula(char **color_line);
 void	trim_type_ids(t_map *map);
 
@@ -150,7 +151,7 @@ uint32_t	get_north_pixel_color(t_map *map, int x, int y);
 
 //draw.c // done
 void	put_px(t_map *map, int x, int y, uint32_t color);
-void	draw_mini_map(t_map *map, mlx_image_t *img);
+void	draw_mini_map(t_map *map);
 void	draw_line_direction(t_map *map, double ray_angle, double line_px);
 void	draw_player(t_map *map, mlx_image_t *img);
 void	draw_wall_3d(t_map *map, int startx, int starty, double wall_height);
