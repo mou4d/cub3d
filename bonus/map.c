@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:09:18 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/04 23:01:19 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:46:25 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	validate_line(char **map, char *line, int cy, int cx)
 {

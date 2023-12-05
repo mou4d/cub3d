@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:39:08 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/04 23:01:35 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:46:10 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 #include <string.h>
 
 /// @brief prints Error\n thetn some error details

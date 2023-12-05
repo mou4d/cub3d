@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 03:56:50 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/04 19:58:08 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:46:07 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	put_px(t_map *map, int x, int y, uint32_t color)
 {

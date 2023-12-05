@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   info_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:09:56 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/04 22:11:48 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:46:18 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	info_player_helper(t_map *m)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   key_mlx.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:18:10 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/04 22:11:05 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/05 00:33:34 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 bool	movestp_not_into_wall(t_map *map, double movestp, double M)
 {
@@ -57,14 +57,33 @@ void	helper_update_key(t_map *map)
 	}
 }
 
+void	mouse_handler(t_map *map, int *x, int *oldx)
+{
+	int	y;
+
+	*oldx = *x;
+	if (*x >= 0 && *x <= map->xwindows_width)
+		mlx_get_mouse_pos(map->mlx, x, &y);
+	else
+	{
+		mlx_set_mouse_pos(map->mlx, map->xwindows_width / 2,
+			map->ywindows_height / 2);
+		mlx_get_mouse_pos(map->mlx, x, &y);
+		oldx = x;
+	}
+}
+
 void	update_key(void *tmp)
 {
-	t_map	*map;
+	t_map		*map;
+	static int	x = 0;
+	int			oldx;
 
 	map = (t_map *)tmp;
 	map->plr->move_up_down = 0; 
 	map->plr->move_right_or_left = 0;
 	map->plr->direction = 0;
+	mouse_handler(map, &x, &oldx);
 	if (mlx_is_key_down(map->mlx, MLX_KEY_W) == true)
 		map->plr->move_up_down = 1;
 	else if (mlx_is_key_down(map->mlx, MLX_KEY_S) == true)
@@ -73,15 +92,12 @@ void	update_key(void *tmp)
 		map->plr->move_right_or_left = 1;
 	else if (mlx_is_key_down(map->mlx, MLX_KEY_A) == true)
 		map->plr->move_right_or_left = -1;
-	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT) == true)
+	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT) == true || x < oldx)
 		map->plr->direction = -1;
-	else if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT) == true)
+	else if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT) == true || x > oldx)
 		map->plr->direction = 1;
 	else if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE) == true)
-	{
-		free_all(map);
-		exit(0);
-	}
+		(free_all(map), exit(0));
 	helper_update_key(map);
 	init_mlx(map);
 }

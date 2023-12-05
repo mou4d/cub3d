@@ -6,11 +6,11 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 02:23:21 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 22:08:52 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:45:50 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 typedef struct s_horz_and_verticle_touch
 {

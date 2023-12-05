@@ -6,11 +6,11 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 02:52:18 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 23:49:34 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:46:16 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 uint32_t	get_east_pixel_color(t_map *map, int x, int y)
 {

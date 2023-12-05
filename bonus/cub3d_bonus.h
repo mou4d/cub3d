@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/04 23:24:42 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/05 00:54:14 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
 # include <errno.h>
-# include "./lib/libft/libft.h"
-# include "./lib/MLX42/include/MLX42/MLX42.h"
+# include "../lib/libft/libft.h"
+# include "../lib/MLX42/include/MLX42/MLX42.h"
 # define MINI_MAP 0.09
 
 typedef struct s_angle

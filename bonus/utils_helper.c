@@ -6,11 +6,11 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:20:26 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 22:30:09 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:46:35 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	error_mlx(void)
 {

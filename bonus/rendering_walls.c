@@ -6,11 +6,11 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:10:05 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 23:50:34 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:46:32 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 uint32_t	get_color(t_map *map, int i, int y)
 {

@@ -6,11 +6,11 @@
 /*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 04:09:51 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/02 22:09:32 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:46:03 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 double	hm_px_bw_pyr_and_wall(t_map *map, double rayangle, int i)
 {

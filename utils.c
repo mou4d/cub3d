@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:41 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/04 23:22:44 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:43:54 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,4 @@ void	init_mlx(t_map *map)
 	cast_rays(map);
 	clear_windows(map);
 	rendering_wall_3d(map);
-	draw_mini_map(map);
-	draw_player(map, map->img);
-	while (i < map->plr->num_arys)
-	{
-		draw_line_direction(map, map->wall3d->rays_angle[i],
-			map->wall3d->small_distance[i]);
-		i++;
-	}
 }

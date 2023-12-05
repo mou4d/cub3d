@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:33:48 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/04 23:21:20 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/05 00:12:31 by wzakkabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 char	**fix_map(char **map)
 {
@@ -79,6 +79,7 @@ void	helper_start_cub3d(t_map *map)
 		|| !map->txt->south || !map->txt->east)
 		exit(2);
 	init_mlx(map);
+	mlx_set_cursor_mode(map->mlx, MLX_MOUSE_HIDDEN);
 	mlx_loop_hook(map->mlx, update_key, map);
 	mlx_loop(map->mlx);
 }
