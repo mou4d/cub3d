@@ -1,10 +1,21 @@
-NO ./wall_texture/mg-46_uh51.1280.png
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./wall_texture/wall0.png
+
+
+
+
+SO ./wall_texture/wall1.png
+
+
+
+WE ./wall_texture/wall2.png
+
+
+
+
+EA ./wall_texture/wall3.png
 
 F 133,130,59
-C 165,72,72
+C 165,172,72
 
 111111
 100001

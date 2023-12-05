@@ -1,5 +1,5 @@
 NO ./wall_texture/wall0.png
- SO ./wall_texture/wall1.png
+SO ./wall_texture/wall1.png
 WE ./wall_texture/wall2.png
 EA ./wall_texture/wall3.png
 
@@ -10,3 +10,4 @@ C 0,0,255
  10S01111111
   111 111111
   11111111
+   
