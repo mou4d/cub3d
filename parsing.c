@@ -6,30 +6,11 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 20:57:09 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/05 18:54:44 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/06 00:54:34 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	add_and_check(char *types, char l, int *ret)
-{
-	int	i = -1;
-
-	while (types[++i] != '\0')
-	{
-		if (types[i] == l)
-		{
-			*ret = 0;
-			return ;
-		}
-	}
-	if (i != -1)
-	{
-		types[*ret] = l;
-		*ret += 1;
-	}
-}
 
 int	check_type_id(char	*type_id, int count, char *types)
 {
@@ -44,11 +25,11 @@ int	check_type_id(char	*type_id, int count, char *types)
 		|| ft_strncmp(tmp[0], "EA", 3) == 0)
 	{
 		check_texture_file(tmp);
-		add_and_check(types, tmp[0][0], &ret);
+		count_and_check(types, tmp[0][0], &ret);
 	}
 	else if ((!ft_strncmp(tmp[0], "F", 2) || !ft_strncmp(tmp[0], "C", 2))
 		&& check_color_formula(tmp))
-		add_and_check(types, tmp[0][0], &ret);
+		count_and_check(types, tmp[0][0], &ret);
 	else
 		ret = 0;
 	free_2d_array(tmp);
@@ -81,8 +62,6 @@ void	init_type_ids(t_map *map, char *type)
 		map->ea = ft_strdup(tmp[1]);
 	free_2d_array(tmp);
 }
-
-
 
 /// @brief process map and initialize the type ids in map struct
 /// @param map pointer to t_map struct
@@ -135,6 +114,7 @@ t_map	*read_map(char *file)
 	if (!ret)
 		return (NULL);
 	ret->map_fd = fd;
+	ft_strlcpy(ret->map_buff, buff, ft_strlen(buff));
 	ret->map_s = ft_split(buff, '\n');
 	ret->init_player_x = -1;
 	ret->init_player_y = -1;
@@ -149,6 +129,7 @@ int	process_map(t_map *map)
 	ret = 0;
 	if (check_map_elements(map, map->map_s, "NSEW01 ") != 1)
 		return (printf("Map elements not valid\n"));
+	check_map_newlines(map->map_buff);
 	i = 5;
 	while (map->map_s[++i])
 	{

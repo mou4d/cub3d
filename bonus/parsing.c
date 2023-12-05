@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 20:57:09 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/04 23:46:32 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/06 00:24:30 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-int	check_type_id(char	*type_id, int count)
+int	check_type_id(char	*type_id, int count, char *types)
 {
 	int		ret;
 	char	**tmp;
@@ -21,15 +21,15 @@ int	check_type_id(char	*type_id, int count)
 	tmp = ft_split(type_id, ' ');
 	if (ft_strncmp(tmp[0], "NO", 3) == 0
 		|| ft_strncmp(tmp[0], "SO", 3) == 0
-		||ft_strncmp(tmp[0], "WE", 3) == 0
+		|| ft_strncmp(tmp[0], "WE", 3) == 0
 		|| ft_strncmp(tmp[0], "EA", 3) == 0)
 	{
 		check_texture_file(tmp);
-		ret += 1;
+		count_and_check(types, tmp[0][0], &ret);
 	}
 	else if ((!ft_strncmp(tmp[0], "F", 2) || !ft_strncmp(tmp[0], "C", 2))
 		&& check_color_formula(tmp))
-		ret += 1;
+		count_and_check(types, tmp[0][0], &ret);
 	else
 		ret = 0;
 	free_2d_array(tmp);
@@ -68,17 +68,19 @@ void	init_type_ids(t_map *map, char *type)
 /// @return processed type ids count 
 int	process_type_ids(t_map *map)
 {
-	int	i;
-	int	count;
+	int		i;
+	int		count;
+	char	types[7];
 
 	i = 0;
 	count = 0;
+	ft_bzero(types, 7);
 	while (map->map_s[i] && i < 6)
 	{
 		trim_type_ids(map);
 		if (!ft_isalpha(map->map_s[i][0]) && count <= 6) 
 			break ;
-		count = check_type_id(map->map_s[i], count);
+		count = check_type_id(map->map_s[i], count, types);
 		if (count == 0)
 			break ;
 		init_type_ids(map, map->map_s[i]);
@@ -112,6 +114,7 @@ t_map	*read_map(char *file)
 	if (!ret)
 		return (NULL);
 	ret->map_fd = fd;
+	ft_strlcpy(ret->map_buff, buff, ft_strlen(buff));
 	ret->map_s = ft_split(buff, '\n');
 	ret->init_player_x = -1;
 	ret->init_player_y = -1;
@@ -126,6 +129,7 @@ int	process_map(t_map *map)
 	ret = 0;
 	if (check_map_elements(map, map->map_s, "NSEW01 ") != 1)
 		return (printf("Map elements not valid\n"));
+	check_map_newlines(map->map_buff);
 	i = 5;
 	while (map->map_s[++i])
 	{

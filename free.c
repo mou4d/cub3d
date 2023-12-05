@@ -6,7 +6,7 @@
 /*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 05:11:17 by wzakkabi          #+#    #+#             */
-/*   Updated: 2023/12/04 23:22:02 by mbousbaa         ###   ########.fr       */
+/*   Updated: 2023/12/06 00:52:43 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,71 @@ void	free_all(t_map *map)
 		free(map->map_s[i]);
 	free(map->map_s);
 	free(map);
+}
+
+void	count_and_check(char *types, char l, int *ret)
+{
+	int	i;
+
+	i = -1;
+	while (types[++i] != '\0')
+	{
+		if (types[i] == l)
+		{
+			*ret = 0;
+			return ;
+		}
+	}
+	if (i != -1)
+	{
+		types[*ret] = l;
+		*ret += 1;
+	}
+}
+
+int	get_map_index(char *map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+	{
+		while (map[i] && (map[i] == '\n' | map[i] == '\t' || map[i] == ' '))
+			i++;
+		if (map[i] == 'N' || map[i] == 'S' || map[i] == 'W'
+			|| map[i] == 'E' || map[i] == 'F' || map[i] == 'C')
+		{
+			while (map[i] && map[i] != '\n')
+				i++;
+		}
+		else
+		{
+			while (map[i] && map[i] != '1')
+				i++;
+			if (map[i] == '1')
+				return (i);
+		}
+		if (map[i])
+			i++;
+	}
+	return (0);
+}
+
+void	check_map_newlines(char *map)
+{
+	int	i;
+
+	i = get_map_index(map);
+	while (map[i])
+	{
+		if (map[i] == '\n')
+		{
+			i += 1;
+			while (map[i] && map[i] == ' ')
+				i++;
+			if (map[i] == '\n')
+				error_("Multiple new lines in a map", NULL);
+		}
+		i++;
+	}
 }

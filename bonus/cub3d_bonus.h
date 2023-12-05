@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wzakkabi <wzakkabi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mbousbaa <mbousbaa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:27:39 by mbousbaa          #+#    #+#             */
-/*   Updated: 2023/12/05 00:54:14 by wzakkabi         ###   ########.fr       */
+/*   Updated: 2023/12/05 23:59:01 by mbousbaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_map
 	char		*ea;
 	char		*f;
 	char		*c;
+	char		map_buff[BUFSIZ];
 	char		**map_s;
 	int			init_player_x;
 	int			init_player_y;
@@ -140,6 +141,8 @@ void		info_player(t_plr *p, t_map *m);
 
 //free.c // done
 void		free_all(t_map *map);
+void		count_and_check(char *types, char l, int *ret);
+void		check_map_newlines(char *map_buff);
 
 // get_pixel.c
 uint32_t	get_east_pixel_color(t_map *map, int x, int y);
